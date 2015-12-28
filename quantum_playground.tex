@@ -1,0 +1,114 @@
+% Thomas Mortensson - September 2013
+
+\documentclass[twocolumn]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+\setlength{\parskip}{1em}
+
+\renewcommand{\familydefault}{\sfdefault}
+\definecolor{DarkGreen}{rgb}{0.0,0.4,0.0} % Comment color
+\definecolor{highlight}{RGB}{255,251,204} % Code highlight color
+
+\lstdefinestyle{Style1}{ % Define a style for your code snippet, multiple definitions can be made if, for example, you wish to insert multiple code snippets using different programming languages into one document
+language=Python, % Detects keywords, comments, strings, functions, etc for the language specified
+backgroundcolor=\color{highlight}, % Set the background color for the snippet - useful for highlighting
+basicstyle=\footnotesize\ttfamily, % The default font size and style of the code
+breakatwhitespace=false, % If true, only allows line breaks at white space
+breaklines=true, % Automatic line breaking (prevents code from protruding outside the box)
+captionpos=b, % Sets the caption position: b for bottom; t for top
+commentstyle=\usefont{T1}{pcr}{m}{sl}\color{DarkGreen}, % Style of comments within the code - dark green courier font
+deletekeywords={}, % If you want to delete any keywords from the current language separate them by commas
+%escapeinside={\%}, % This allows you to escape to LaTeX using the character in the bracket
+firstnumber=1, % Line numbers begin at line 1
+frame=single, % Frame around the code box, value can be: none, leftline, topline, bottomline, lines, single, shadowbox
+frameround=tttt, % Rounds the corners of the frame for the top left, top right, bottom left and bottom right positions
+keywordstyle=\color{Blue}\bf, % Functions are bold and blue
+morekeywords={}, % Add any functions no included by default here separated by commas
+numbers=left, % Location of line numbers, can take the values of: none, left, right
+numbersep=10pt, % Distance of line numbers from the code box
+numberstyle=\tiny\color{Gray}, % Style used for line numbers
+rulecolor=\color{black}, % Frame border color
+showstringspaces=false, % Don't put marks in string spaces
+showtabs=false, % Display tabs in the code as lines
+stepnumber=5, % The step distance between line numbers, i.e. how often will lines be numbered
+stringstyle=\color{Purple}, % Strings are purple
+tabsize=2, % Number of spaces per tab in the code
+}
+
+\begin{document}
+\lstset{style=Style1}
+
+\title{Programming a Quantum Computer} 
+\author{Dominic Moylett\\
+        	Quantum Engineering Centre for Doctoral Training,\\
+		University of Bristol,\\
+		\texttt{\href{mailto:dm1905@bristol.ac.uk}{dm1905@bristol.ac.uk}} 
+		}
+\date{\today} 
+\maketitle
+
+\section{What is Quantum Computing?}
+
+Quantum computing was first proposed in the 1980s by a number of physicists, who said that since computers are physical objects, we should build them to take advantage of physical effects. The most bizarre and powerful physical effects have been witnessed in the area of quantum physics, which studies the measurement and interaction of really small particles. In the decades that have followed since then, academics at many institutions -- including the University of Bristol -- have studied how these effects can benefit our technology, and how we can realise this in practice.
+
+In this workshop, we aim to highlight some of the strange effects that occur at the quantum level, and how they can allow our computers to be faster and more powerful than otherwise. To do so, we will simulate a small quantum computer using the Quantum Computing Playground, a website developed by engineers at Google to show off a quantum computer.
+
+All you need to get started is a laptop with Google Chrome installed. Open up Google Chrome and go to the website \url{http://quantumplayground.net/}. Click ``Playground'' in the menu. This will load the playground with a default script. Delete this script as it will not be necessary, and click on the ``2D+Phase'' icon in the top left of the screen. We are now ready to explore the world of quantum computers!
+
+\section{Quantum Bits}
+
+A classical computer is made up of bits: $1$s and $0$s that represent any data the computer stores internally. Quantum computers have a way of storing data as well, known as quantum bits, or {\em qubits}. Because we often work with both classical and quantum bits, we distunguish between them by writing qubits as $|1\rangle$ and $|0\rangle$. These symbols are called {\em kets}, and can be used to describe the whole of quantum mechanics. Note that the text written inside the ket is just a label; $|+\rangle$, $|x\rangle$ and $| \text{cat is alive} \rangle$ are all valid kets too.
+
+In the Quantum Playground, we define our qubits using the command \texttt{VectorSize}, which we write at the top of our code. This specifies the number of qubits we will be using for computation, and the playground initialises these qubits all to the value $|0\rangle$ Try just running this command and see what displays on the left:
+
+\begin{lstlisting}
+VectorSize 6
+\end{lstlisting}
+
+On the left, this will show us a black image with one white square in the bottom right hand corner. This image describes the state of our qubits. Each square of this image represents a quantum state, and hovering over a square will show us the quantum state, and the numbers for Re and Im. The number Re is $0$ for all quantum states except for the state $|0\rangle$, where Re is $1$. We will see what these numbers mean in the next sections.
+
+\section{Measurement}
+
+While images like this showing off our complete quantum state are nice, we cannot look at quantum states this way in practice. Instead, we have to {\em measure} our qubits. We can do this using the \texttt{MeasureBit} command:
+
+\begin{lstlisting}
+VectorSize 6
+MeasureBit 0
+Print "Measured state of qubit 0 is |" + measured_value + ">"
+\end{lstlisting}
+
+From this we get the output ``Measured state of qubit $0$ is $|0\rangle$''. So, if we initialise our quantum state with all qubits set to $|0\rangle$ and we measure one qubit, we get the result that the qubit is  $|0\rangle$.
+
+\section{Quantum Gates}
+
+But data is only one half of computation. We also need be able to modify the data and perform operations on it. Classical computers do this with logic gates, such as the $NOT$ gate, which converts a $NOT(0) = 1$ and $NOT(1) = 0$.
+
+In quantum computing, we also have logic gates, which are called quantum gates. One example of this is the $X$ gate, which is the quantum equivalent of a classical $NOT$ gate: $X|0\rangle = |1\rangle$ and $X|1\rangle = |0\rangle$. Let's try this in the playground:
+
+\begin{lstlisting}
+VectorSize 6
+SigmaX 0
+MeasureBit 0
+Print "Measured state of qubit 0 is |" + measured_value + ">"
+\end{lstlisting}
+
+Now when we measure our qubit, we find that the result is $|1\rangle$. We can also check the other direction by applying $X$ to our qubit twice before measureing it, and find that $XX|0\rangle = X|1\rangle = |0\rangle$
+
+\section{Superposition}
+
+\section{Multiple Qubits}
+
+\section{Entanglement}
+
+\section{Deutsch's Algorithm}
+
+\section{Where's my Quantum Computer?}
+
+\section{Further Reading}
+
+\end{document} 
