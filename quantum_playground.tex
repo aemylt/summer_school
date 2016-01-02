@@ -30,12 +30,12 @@ frameround=tttt, % Rounds the corners of the frame for the top left, top right, 
 keywordstyle=\color{Blue}\bf, % Functions are bold and blue
 morekeywords={}, % Add any functions no included by default here separated by commas
 numbers=left, % Location of line numbers, can take the values of: none, left, right
-numbersep=10pt, % Distance of line numbers from the code box
+numbersep=5pt, % Distance of line numbers from the code box
 numberstyle=\tiny\color{Gray}, % Style used for line numbers
 rulecolor=\color{black}, % Frame border color
 showstringspaces=false, % Don't put marks in string spaces
 showtabs=false, % Display tabs in the code as lines
-stepnumber=5, % The step distance between line numbers, i.e. how often will lines be numbered
+stepnumber=1, % The step distance between line numbers, i.e. how often will lines be numbered
 stringstyle=\color{Purple}, % Strings are purple
 tabsize=2, % Number of spaces per tab in the code
 }
@@ -263,31 +263,54 @@ MeasureBit 0
 Print "Qubit 0 is |" + measured_value + ">"
 \end{lstlisting}
 
-For line 5, we pick what operation to run based on what we want $f(0)$ and $f(1)$ to be.
+For line 5, we pick what operation to run based on what we want $f(0)$ and $f(1)$ to be. This quantum operator is called $U_f$, and is formally stated as $U_f|x\rangle|y\rangle = |x\rangle|y \oplus f(x)\rangle$, where $\oplus$ is the exclusive-OR (XOR) gate. It might seem difficult to implement a quantum gate like this, but we can actually do it very easily, based on what the function $f$ is.
 
-If we run the full program, we find that if $f(0) = f(1)$ then qubit $0$ when measured is in the $|0\rangle$ state, and if $f(0) \neq f(1)$ then qubit $0$ when measured is in the $|1\rangle$ state. Thus we have managed to figure out if $f(0) = f(1)$ with only one query of our function. Later, David Deutsch and Richard Josza showed that this can be generalised such that if $f$ takes $n$ bits input and produces $1$ bit output, a classical computer would require up to $2^{n-1} + 1$ queries of $f$, but a quantum computer would still only need $1$ query.
+Case $1$: If you want $f(0) = 0 \text{ and } f(1) = 0$, then delete line $5$.
 
-This problem doesn't sound very useful, but there are many more practical problems for which quantum computers can do better:
+Case $2$: If you want $f(0) = 0 \text{ and } f(1) = 1$, then replace line $5$ with:
+
+\begin{lstlisting}
+CNot 0, 1
+\end{lstlisting}
+
+Case $3$: If you want $f(0) = 1 \text{ and } f(1) = 0$, then replace line $5$ with:
+
+\begin{lstlisting}
+CNot 0, 1
+SigmaX 1
+\end{lstlisting}
+
+Case $4$: Or if you want $f(0) = 1 \text{ and } f(1) = 0$, then replace line $5$ with:
+
+\begin{lstlisting}
+SigmaX 1
+\end{lstlisting}
+
+If we run the full program, we find that if $f(0) = f(1)$ (cases $1$ and $4$) then qubit $0$ when measured is in the $|0\rangle$ state, and if $f(0) \neq f(1)$ (cases $1$ and $2$) then qubit $0$ when measured is in the $|1\rangle$ state. Thus we have managed to figure out if $f(0) = f(1)$ with only one query of our function. Later, David Deutsch and Richard Josza showed that a more general problem would require an exponential number of queries on a classical computer, but just one query on a quantum computer.
+
+You might wonder what the point of this was if we can already see the code, as in this case. In this case, we can see the code that makes up $U_f$, and can thus figure out if $f(0) = f(1)$ based on just reading that. But we might not always have access to the code; we might just be given a black box which we know implements $U_f|x\rangle|y\rangle = |x\rangle|y \oplus f(x)\rangle$, without knowing what exactly $f$ is. Deutsch's Algorithm works in that case as well.
+
+This problem doesn't sound very useful, but there are many more practical problems for which quantum computers can do better than classical computers:
 
 \begin{itemize}
-\item Charles Bennett and Stephen Wiesner showed that you could send two classical bits from one person to another by just sending a single qubit from one to the other.
+\item Charles Bennett and Stephen Wiesner showed that you can send two classical bits from one person to another by just sending one qubit from one to the other.
 \item Searching through an unsorted list of items $n$ for a particular item requires at most $n$ classical queries -- one for each item. Lov Grover showed that on a quantum computer, we can do this with $\sqrt{n}$ queries.
-\item Peter Shor showed that you can efficiently factor an integer into its prime factors on a quantum computer. Classically, this problem is assumed to be hard as it forms the backbone of the RSA encryption scheme.
+\item Peter Shor showed that you can efficiently find the prime factors of an integer on a quantum computer. This problem is believed to be hard to solve on a classical computer, because if it was easy then the RSA encryption scheme would be broken.
 \end{itemize}
 
 \section{Wait, where's the Physics?}
 
 We have seen the theory behind a lot of quantum effects today, but not much on where these quantum effects actually occurr. When do superpositions or entanglement happen in the real world? I have avoided talking about real life experiments partially because they become more complex as implementation details are added, but also because quantum effects happen in many different cases.
 
-When the first quantum effects were witnessed, they were seen in experiments involving light. This could be explained by concluding that light was a wave. But we then saw the same effects with electrons, which are definitely not waves. And we have seen them with larger and larger particles; the largest particles we have seen quantum effects on are bucky-balls: Molecules made up of sixty carbon atoms joined together. And for all of these particles, the quantum effects we have witnessed with them can be explained using theory similar to what we have seen today.
+When the first quantum effects were witnessed, they were seen in experiments involving light. This could be explained by concluding that light was a wave. But we then saw the same effects with electrons, which are definitely not waves. And we have seen them with larger and larger particles ever since. The largest particles we have seen quantum effects on are bucky-balls: Molecules made up of sixty carbon atoms joined together. And for all of these particles, the quantum effects we have witnessed with them can be explained using theory similar to what we have seen today.
 
 \section{When will I be able to Buy a Quantum Computer?}
 
 Depending on what you mean by a quantum computer, you can buy one right now! The Canadian company D-Wave Systems already sell quantum computers, but these computers are only built for solving a very specific problem called quantum annealing. But they are on the market, and Google are currently seeing how useful the quantum annealer they bought from D-Wave is for their business.
 
-But what is more interesting in the Physics community is when will we see a {\em universal quantum computer}. And the answer is we don't know, but you can use one right now! The Centre for Quantum Photonics at the University of Bristol connected their two qubit universal quantum computer to the Internet, in what they call the Quantum in the Cloud project.
+But what is more interesting in the Physics community is when will we see a {\em universal quantum computer} -- a computer that can perform any quantum computation -- on the market. And the answer is we don't know, but you can use one right now! The Centre for Quantum Photonics at the University of Bristol connected their two qubit universal quantum computer to the Internet, in what they call the Quantum in the Cloud project.
 
-But two qubits is not very useful either: When are we going to get many qubit universal quantum computers? And the answer is we don't know, but potentially soon. John Martinis of the University of California, Santa Barbara has partnered up with Google and is hoping to have developed a $100$ qubit universal quantum computer within the next 2-3 years. Microsoft Research predicts a quantum computer to be built within the next ten years. Others have predicted timescales ranging from five years to four decades. Regardless of when it comes, one thing is certain: There's a lot of excitement surrounding quantum computers right here and now.
+But two qubits is not very useful either: When are we going to get many qubit universal quantum computers? And the answer is we don't know, but potentially soon. John Martinis of the University of California, Santa Barbara has partnered up with Google and is hoping to develop a $100$ qubit universal quantum computer within the next 2-3 years. Microsoft Research predicts a quantum computer to be built within the next ten years. Others have predicted timescales ranging from five years to forty years. Regardless of when it comes, one thing is certain: There's a lot of excitement surrounding quantum computers right here and now.
 
 \section{Further Reading}
 
@@ -295,7 +318,7 @@ I first heard about quantum computing at an open day at the University of Bristo
 
 Ashley also gave a guest lecture on quantum computing from both a theoretical and practical perspective, the slides of which are available here:\url{http://www.maths.bris.ac.uk/~csxam/teaching/history.pdf}
 
-Juan Miguel Arrazola of the Institute for Quatum Computing at the University of Waterloo has been writing a collection of blog posts explaining quantum mechanics to everyone. Part one is here: \url{https://uwaterloo.ca/institute-for-quantum-computing/blog/post/anyone-can-understand-quantum-mechanics-part-1}; part two is here: \url{https://uwaterloo.ca/institute-for-quantum-computing/blog/post/anyone-can-understand-quantum-mechanics-part-2}; and part three will be coming soon.
+Juan Miguel Arrazola of the Institute for Quatum Computing at the University of Waterloo has been writing a collection of blog posts explaining quantum mechanics to everyone. Part one is here: \url{https://uwaterloo.ca/institute-for-quantum-computing/blog/post/anyone-can-understand-quantum-mechanics-part-1}; part two is here: \url{https://uwaterloo.ca/institute-for-quantum-computing/blog/post/anyone-can-understand-quantum-mechanics-part-2}; and part three will be coming soon, so make sure to keep an eye on their blog.
 
 Note that while these are the easier aspects of quantum mechanics to understand, a lot of quantum mechanics in general rely on topics that are taught at GCSE or A Level Mathematics, so be cautious about running out and buying a copy of Nielsen and Chuang's Quantum Computation and Quantum Information just yet! But if you want to try and get ahead, some very useful mathematical concepts to learn include:
 
