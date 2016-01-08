@@ -110,6 +110,7 @@ Print "Qubit 0 is |" + measured_value + ">"
 Now when we measure our qubit, we find that the result is $|1\rangle$. We can also check the other direction by applying $X$ to our qubit twice before measureing it, and find that $XX|0\rangle = X|1\rangle = |0\rangle$.
 
 \section{Superposition}
+\label{sec:superposition}
 
 Another example of a single qubit gate is the Hadamard gate, $H$. Let's see what this gate does to a qubit in the $|0\rangle$ state:
 
@@ -129,7 +130,7 @@ Print "Qubit 0 is |" + measured_value + ">"
 
 Running this multiple times, we see that some times we get $|0\rangle$ and other times we get $|1\rangle$. This is called a superposition, where measuring the qubit could give $|0\rangle$ or $|1\rangle$ purely at random. Pure randomness is already a very useful reason for utilising quantum effects in technology, as classical computers are not good at generating random numbers. And this is already in use, a number of online gambling websites use quantum superpositions as a source of randomness.
 
-But how likely are we to measure $|0\rangle$ or $|1\rangle$? This is decided by the Re and Im\footnote{For this workshop, we will only focus on the Re numbers and the Im numbers will be $0$.} numbers we have seen. These numbers form the {\em amplitude}s of the state. When we measure a qubit, the probability of measuring a state with amplitude $a$ is $|a|^2$\footnote{The absolute function $|x|$ converts any negative numbers to positive numbers: $|-1| = |1| = 1$}. In our case, the probability of measuring $|0\rangle$ and $|1\rangle$ are both $|\frac{1}{\sqrt{2}}|^2 = (\frac{1}{\sqrt{2}})^2 = \frac{1}{2}$, so half the time we see a $|0\rangle$ and half the time we see a $|1\rangle$. Because the amplitude of each state is $\frac{1}{\sqrt{2}}$, we say that the state is:
+But how likely are we to measure $|0\rangle$ or $|1\rangle$? This is decided by the Re and Im\footnote{For this workshop, we will only focus on the Re numbers and the Im numbers will be $0$.} numbers we have seen. These numbers form the {\em amplitude}s of the state. When we measure a qubit, the probability of measuring a state with amplitude $a$ is $|a|^2$, where $|a|$ is the absolute function\footnote{The absolute function $|x|$ converts any negative numbers to positive numbers: $|-1| = |1| = 1$}. In our case, the probability of measuring $|0\rangle$ and $|1\rangle$ are both $|\frac{1}{\sqrt{2}}|^2 = (\frac{1}{\sqrt{2}})^2 = \frac{1}{2}$, so half the time we see a $|0\rangle$ and half the time we see a $|1\rangle$. Because the amplitude of each state is $\frac{1}{\sqrt{2}}$, we say that the state is:
 
 $$H|0\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}}$$
 
@@ -162,6 +163,8 @@ $$H|1\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}}$$
 
 This explains why the results when measuring look so similar, as the probability of getting $|0\rangle$ or $|1\rangle$ is still $\frac{1}{2}$\footnote{$|-\frac{1}{\sqrt{2}}|^2 = (\frac{1}{\sqrt{2}})^2 = \frac{1}{2}$}.
 
+Like the $X$ gate, applying the Hadamard gate twice will produce the original qubit: $HH|0\rangle = H\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) = |0\rangle$ and $HH|1\rangle = H\left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right) = |1\rangle$. See the Further reading section for a formal proof of this. In fact, all quantum gates are reversible: After applying a quantum gate to a qubit, there is always another gate we can apply to get back to the original qubit.
+
 You might wonder at this point what other quantum states we can possibly make with a single qubit. The answer is that we can make any qubit of the form $a|0\rangle + b|1\rangle$, where $|a|^2 + |b|^2 = 1$.
 
 \section{Multiple Qubits}
@@ -180,9 +183,9 @@ MeasureBit 1
 Print "Qubit 1 is |" + measured_value + ">"
 \end{lstlisting}
 
-We find that they are in the $|11\rangle$ similarly to when we were acting only on individual qubits. Likewise, if we applied $X$ to only qubit $0$, then we would find that they were in the $|10\rangle$ state. So applying a quantum gate to one qubit doesn't affect the other.
+And we find that they are in the $|11\rangle$ state, similarly to when we were acting only on individual qubits. Likewise, if we applied $X$ to only qubit $0$, then we would find that they were in the $|10\rangle$ state. So applying a quantum gate to one qubit doesn't affect the other.
 
-If we apply a Hadamard gate to both qubits, we would find that they were in their own superpositions and would produce random measurement results, independently of each other:
+If we apply a Hadamard gate to both qubits, we would find that they were in their own superpositions and would produce random measurements:
 
 \begin{lstlisting}
 VectorSize 6
@@ -239,11 +242,14 @@ Print "Qubit 1 is |" + measured_value + ">"
 
 This produces a very different result. It now appears that our measurement of qubit $0$ is random, but our measurement of qubit $1$ is always the same state as qubit $0$. If we measure qubit $1$ first; then our measurement of qubit $1$ will be random, but our measurement of qubit $0$ will always be the same state as qubit $1$. It seems that our qubits are in a superposition together, and if one collapses then the other collapses with it. We write this state as:
 
-$$\frac{|00\rangle + |11\rangle}{\sqrt{2}}$$
+\begin{gather*}
+CNOT\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}|0\rangle\right) = \frac{CNOT|0\rangle|0\rangle + CNOT|1\rangle|0\rangle}{\sqrt{2}}\\
+= \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+\end{gather*}
 
 This effect is called {\em entanglement}, and is one of the strangest results of quantum mechanics. Entangled states seem to collapse at exactly the same time, even if one qubit is at the At-Bristol Science Centre and the other is at the Digimakers Moon Base\footnote{Construction pending}. Classically this simultaneous collapse should be impossible, as that would require one qubit to send a message to the other faster than the speed of light, which would break the laws of relativity.
 
-While we haven't been able to perform the entanglement of qubits between the At-Bristol Science Centre and the Digimakers Moon Base, physicists at Delft University of Technology in The Netherlands have managed to successfully entangle qubits and witness these effects before light could have travelled from one qubit to the other. So there must be something more to quantum.
+While we haven't been able to entangle qubits between the At-Bristol Science Centre and the Digimakers Moon Base, physicists at Delft University of Technology in The Netherlands have managed to successfully entangle qubits and witness these effects before light could have travelled from one qubit to the other. So there must be something more to quantum.
 
 \section{Deutsch's Algorithm}
 
@@ -287,16 +293,18 @@ Case $4$: Or if you want $f(0) = 1 \text{ and } f(1) = 0$, then replace line $5$
 SigmaX 1
 \end{lstlisting}
 
-If we run the full program, we find that if $f(0) = f(1)$ (cases $1$ and $4$) then qubit $0$ is in the $|0\rangle$, and if $f(0) \neq f(1)$ (cases $1$ and $2$) then qubit $0$ is in the $|1\rangle$ state. Thus we have solved the problem with only one query. David Deutsch and Richard Josza later showed that a similar problem requires many queries on a classical computer, but just one on a quantum computer.
+If we run the full program, we find that if $f(0) = f(1)$ (cases $1$ and $4$) then qubit $0$ is in the $|0\rangle$ state, and if $f(0) \neq f(1)$ (cases $1$ and $2$) then qubit $0$ is in the $|1\rangle$ state. Thus we have solved the problem with only one query. David Deutsch and Richard Josza later showed that a similar problem requires many queries on a classical computer, but just one on a quantum computer.
 
-Deutsch's algorithm also works if we cannot see the code within the quantum operator $U_f$. If we are just given a black box which we are told implements $U_f$ then we can still figure out if $f(0) = f(1)$.
+A formal proof is in the Further Reading, but to give some intuition about this effect, after applying the Hadamard to each qubit, our two qubits are in the state $\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) \otimes \left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)$. Now, note that in cases $1$ and $4$, we do nothing to qubit $0$, so after applying $U_f$, qubit $0$ is still in the state $\frac{|0\rangle + |1\rangle}{\sqrt{2}}$. But in cases $2$ and $3$, we apply a $CNOT$. With our two qubits in their current state, the $CNOT$ ends up swapping the qubits, so qubit $0$ becomes $\frac{|0\rangle - |1\rangle}{\sqrt{2}}$. So the Hadamard in line $8$ converts qubit $0$ to $|0\rangle$ if $f(0) = f(1)$, and $|1\rangle$ if $f(0) \neq f(1)$ -- recall from Section \ref{sec:superposition} that $H\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) = |0\rangle$ and $H\left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right) = |1\rangle$.
+
+Of course, in this case we can see the code that make up $U_f$ and thus figure out if $f(0) = f(1)$ by seeing if there is a $CNOT$ in the code. But Deutsch's algorithm also works if we cannot see the code within the quantum operator $U_f$. If we are just given a black box which we are told implements $U_f$ then we can still figure out if $f(0) = f(1)$.
 
 This problem doesn't sound very useful, but there are many more practical problems which quantum computers can do better than classical computers:
 
 \begin{itemize}
 \item Charles Bennett and Stephen Wiesner showed that you can send two classical bits from one person to another by just sending one qubit from one to the other.
-\item Searching through an unsorted list of items $n$ for a particular item requires $n$ classical queries -- one for each item. Lov Grover showed that we can do this with $\sqrt{n}$ queries on a quantum computer.
-\item Peter Shor showed that you can efficiently find the prime factors of an integer on a quantum computer. Solving this problem efficiently can break the RSA encryption scheme.
+\item Searching through an unsorted list of $n$ items for a particular item requires $n$ classical queries -- one for each item. Lov Grover showed that we can do this with $\sqrt{n}$ queries on a quantum computer.
+\item Peter Shor showed that you can efficiently find the prime factors of an integer on a quantum computer. This problem is believed to be hard classically, as finding an efficient solution would break the RSA encryption scheme.
 \end{itemize}
 
 \section{Where is my Quantum Computer?}
@@ -309,9 +317,9 @@ But two qubits is not very useful: When are we going to get many qubit universal
 
 \section{Further Reading}
 
-I first heard about quantum computing from a booklet written by Ashley Montanaro at the University of Bristol, which explains many of the concepts discussed here -- including Deutsch's Algorithm -- from an even more theoretical perspective. That booklet is available here: \url{http://www.cs.bris.ac.uk/~montanar/gameshow.pdf}
+I first heard about quantum computing from a booklet written by Ashley Montanaro at the University of Bristol, which explains many of the concepts discussed here from a theoretical perspective, including a formal proof of Deutsch's Algorithm. That booklet is available here: \url{http://www.cs.bris.ac.uk/~montanar/gameshow.pdf}
 
-Ashley also gave a guest lecture on quantum computing from both a theoretical and practical perspective, the slides of which are available here:\url{http://www.maths.bris.ac.uk/~csxam/teaching/history.pdf}
+Ashley also recently gave a guest lecture on quantum computing in general, the slides of which are available here:\url{http://www.maths.bris.ac.uk/~csxam/teaching/history.pdf}
 
 Juan Miguel Arrazola at the University of Waterloo has been writing a collection of blog posts explaining quantum mechanics to everyone. Part one is here: \url{https://uwaterloo.ca/institute-for-quantum-computing/blog/post/anyone-can-understand-quantum-mechanics-part-1}; part two is here: \url{https://uwaterloo.ca/institute-for-quantum-computing/blog/post/anyone-can-understand-quantum-mechanics-part-2}; and part three will be coming soon, so make sure to keep an eye on their blog.
 
