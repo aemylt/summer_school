@@ -47,7 +47,7 @@ tabsize=2, % Number of spaces per tab in the code
 \title{Programming a Quantum Computer}
 \author{Dominic Moylett\\
         	Quantum Engineering Centre for Doctoral Training,\\
-		University of Bristol,\\
+		University of Bristol\\
 		\texttt{\href{mailto:dominic.moylett@bristol.ac.uk}{dominic.moylett@bristol.ac.uk}}
 		}
 \date{\today}
@@ -132,7 +132,7 @@ Print "Qubit 0 is |" + measured_value + ">"
 
 Running this multiple times, we see that sometimes we get $|0\rangle$ and other times we get $|1\rangle$. This is called a superposition, where measuring the qubit could give $|0\rangle$ or $|1\rangle$, and it is impossible to predict which result it will be. This is already a very useful reason for utilising quantum effects in technology, as classical computers are not good at generating numbers purely at random. And this technology is already being used for applications from security and simulations to gambling and gaming.
 
-But how likely are we to measure $|0\rangle$ or $|1\rangle$? This is decided by the Re and Im\footnote{For this workshop, we will only focus on the Re numbers and the Im numbers will be $0$.} numbers we have seen. These numbers form the {\em amplitude}s of the state. When we measure a qubit, the probability of measuring a state with amplitude $a$ is $|a|^2$, where $|a|$ is the absolute function\footnote{The absolute function $|x|$ converts any negative numbers to positive numbers: $|-1| = |1| = 1$}. In our case, the probability of measuring $|0\rangle$ and $|1\rangle$ are both $|\frac{1}{\sqrt{2}}|^2 = (\frac{1}{\sqrt{2}})^2 = \frac{1}{2}$, so half the time we see a $|0\rangle$ and half the time we see a $|1\rangle$. Because the amplitude of each state is $\frac{1}{\sqrt{2}}$, we say that the state is:
+But how likely are we to measure $|0\rangle$ or $|1\rangle$? This is decided by the Re and Im\footnote{For this workshop, we will only focus on the Re numbers and the Im numbers will be $0$.} numbers we have seen. These numbers form the {\em amplitude}s of the state. When we measure a qubit, the probability of measuring a state with amplitude $a$ is $|a|^2$, where $|a|$ is the absolute function\footnote{The absolute function $|x|$ converts any negative numbers to positive numbers: $|-1| = |1| = 1$}. In our case, the probability of measuring $|0\rangle$ and $|1\rangle$ are both $\left|\frac{1}{\sqrt{2}}\right|^2 = \left(\frac{1}{\sqrt{2}}\right)^2 = \frac{1}{2}$, so half the time we see a $|0\rangle$ and half the time we see a $|1\rangle$. Because the amplitude of each state is $\frac{1}{\sqrt{2}}$, we say that the state is:
 
 $$H|0\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}}$$
 
@@ -163,7 +163,7 @@ This seems to produce the same result as before: The qubit is in a superposition
 
 $$H|1\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}}$$
 
-This explains why the results when measuring look so similar, as the probability of getting $|0\rangle$ or $|1\rangle$ is still $\frac{1}{2}$\footnote{$|-\frac{1}{\sqrt{2}}|^2 = (\frac{1}{\sqrt{2}})^2 = \frac{1}{2}$}.
+This explains why the results when measuring look so similar, as the probability of getting $|0\rangle$ or $|1\rangle$ is still $\frac{1}{2}$\footnote{$\left|-\frac{1}{\sqrt{2}}\right|^2 = \left(\frac{1}{\sqrt{2}}\right)^2 = \frac{1}{2}$}.
 
 Like the $X$ gate, applying the Hadamard gate twice will produce the original qubit: $HH|0\rangle = H\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) = |0\rangle$ and $HH|1\rangle = H\left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right) = |1\rangle$. You can check this yourself using the Quantum Playground, or if you are more mathematically inclined, look at Section~\ref{subsec:maths-hadamard} for the mathematics behind this. In fact, all quantum gates are reversible: After applying a quantum gate to a qubit, there is always another gate we can apply to get back to the original qubit. It is only after measuring that our operations cannot be reversed.
 
@@ -199,7 +199,7 @@ MeasureBit 1
 Print "Qubit 1 is |" + measured_value + ">"
 \end{lstlisting}
 
-Like single qubits, we can produce any superposition over two qubits. Thus our state can be any form of $a|00\rangle + b|01\rangle + c|10\rangle + d|11\rangle$ where $|a|^2 + |b|^2 + |c|^2 + |d|^2 = 1$. Some example states include $|01\rangle$, $(\frac{|00\rangle + |10\rangle}{\sqrt{2}})$ and $(\frac{|00\rangle + |01\rangle + |10\rangle + |11\rangle}{2})$.
+Like single qubits, we can produce any superposition over two qubits. Thus our state can be any form of $a|00\rangle + b|01\rangle + c|10\rangle + d|11\rangle$ where $|a|^2 + |b|^2 + |c|^2 + |d|^2 = 1$. Some example states include $|01\rangle$, $\frac{|00\rangle + |10\rangle}{\sqrt{2}}$ and $\frac{|00\rangle + |01\rangle + |10\rangle + |11\rangle}{2}$.
 
 \section{Entanglement}
 \label{sec:entanglement}
@@ -243,7 +243,7 @@ MeasureBit 1
 Print "Qubit 1 is |" + measured_value + ">"
 \end{lstlisting}
 
-This produces a very different result. It now appears that our measurement of qubit $0$ is random, but our measurement of qubit $1$ is always the same state as qubit $0$. If we measure qubit $1$ first, then our measurement of qubit $1$ will be random, but our measurement of qubit $0$ will always be the same state as qubit $1$. It seems that our qubits are in a superposition together, and if one collapses then the other collapses with it. We write this state as $(\frac{|00\rangle + |11\rangle}{\sqrt{2}})$, as shown mathematically in Section~\ref{subsec:maths-entanglement}.
+This produces a very different result. It now appears that our measurement of qubit $0$ is random, but our measurement of qubit $1$ is always the same state as qubit $0$. If we measure qubit $1$ first, then our measurement of qubit $1$ will be random, but our measurement of qubit $0$ will always be the same state as qubit $1$. It seems that our qubits are in a superposition together, and if one collapses then the other collapses with it. We write this state as $\frac{|00\rangle + |11\rangle}{\sqrt{2}}$, as shown mathematically in Section~\ref{subsec:maths-entanglement}.
 
 This effect is called {\em entanglement}, and is one of the strangest results of quantum mechanics. Entangled states collapse at exactly the same time, regardless of distance between the two qubits. One qubit could be at the At-Bristol Science Centre and the other could be at the Digimakers Moon Base\footnote{Construction pending.}, and their collapse would still be at the same time. Classically, this simultaneous collapse should be impossible, as it would require one qubit to send a message describing its measurement result to the other faster than the speed of light, breaking the laws of relativity. This led Albert Einstein to describe quantum mechanics as ``Spooky action at a distance.''
 
@@ -308,11 +308,11 @@ This problem doesn't sound very useful, but there are many more practical proble
 
 \section{Where is my Quantum Computer?}
 
-You can buy one right now! D-Wave Systems already sell quantum computers, though these computers are only built for solving a very specific problem called quantum annealing. But they are on the market, and Google are currently seeing how useful the quantum annealer they bought from D-Wave is for their business.
+You can buy one right now! D-Wave Systems already sells quantum computers, though these computers are only built for solving a very specific problem called quantum annealing. But they are on the market, and Google are currently seeing how useful the quantum annealer they bought from D-Wave is for their business.
 
 But what is more interesting in the Physics community is when will we see a {\em universal quantum computer} -- a computer that can perform any quantum computation -- on the market. And the answer is we don't know, but you can use one right now! The Centre for Quantum Photonics at the University of Bristol connected their two qubit universal quantum computer to the Internet so that anyone can have a go at programming on it, in what they call the Quantum in the Cloud project. You can find out more about this work here: \url{http://www.bristol.ac.uk/physics/research/quantum/outreach/qcloud/}
 
-But two qubits is not very useful; when are we going to get universal quantum computers with many qubits? Again, we don't know, but potentially soon: John Martinis at the University of California, Santa Barbara is hoping to develop a $100$ qubit universal quantum computer in 2-3 years; Microsoft Research predicts a quantum computer in ten years; and others have predicted between five and forty years. Regardless of when it comes, one thing is certain: There's a lot of excitement surrounding quantum computers right here and now.
+But two qubits is not very useful; when are we going to get universal quantum computers with many qubits? Again, we don't know, but potentially soon: John Martinis at the University of California, Santa Barbara is working with Google to build a $100$ qubit universal quantum computer in 2-3 years; Microsoft Research predicts a quantum computer in ten years; and others have predicted between five and forty years. Regardless of when it comes, one thing is certain: There's a lot of excitement surrounding quantum computers right here and now.
 
 \section{More Mathematics}
 
@@ -320,7 +320,7 @@ This section contains some of the more challenging mathematics behind the concep
 
 One important property with all the mathematics shown in this section is that all quantum gates are {\em linear}, so applying a gate to a superposition of states is equivalent to applying a gate to each of those states individually. For example, if we apply an $X$ gate to the state $(a|0\rangle + b|1\rangle)$ then we get the state:
 
-$$X(a|0\rangle + b|1\rangle) = (aX|0\rangle + bX|1\rangle) = (a|1\rangle + b|0\rangle)$$
+$$X(a|0\rangle + b|1\rangle) = aX|0\rangle + bX|1\rangle = a|1\rangle + b|0\rangle$$
 
 \subsection{Hadamards are Reversible}
 \label{subsec:maths-hadamard}
@@ -328,8 +328,8 @@ $$X(a|0\rangle + b|1\rangle) = (aX|0\rangle + bX|1\rangle) = (a|1\rangle + b|0\r
 In Section~\ref{sec:superposition}, I stated that $H$ reverses itself: $HH|0\rangle = |0\rangle$. Let's check this:
 
 \begin{gather*}
-    HH|0\rangle = H(\frac{|0\rangle + |1\rangle}{\sqrt{2}}) = \frac{H|0\rangle + H|1\rangle}{\sqrt{2}}\\
-    = \frac{1}{\sqrt{2}}(\frac{|0\rangle + |1\rangle}{\sqrt{2}} + \frac{|0\rangle - |1\rangle}{\sqrt{2}})\\
+    HH|0\rangle = H\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) = \frac{H|0\rangle + H|1\rangle}{\sqrt{2}}\\
+    = \frac{1}{\sqrt{2}}\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}} + \frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)\\
     = \frac{|0\rangle + |1\rangle + |0\rangle - |1\rangle}{2} = \frac{2|0\rangle}{2} = |0\rangle\\
 \end{gather*}
 
@@ -341,7 +341,7 @@ A similar proof can be done for showing that $HH|1\rangle = |1\rangle$.
 I stated in Section~\ref{sec:entanglement} that the entangled state we get after using the $CNOT$ operator is $\frac{|00\rangle + |11\rangle}{\sqrt{2}}$. The mathematical proof of this is below:
 
 \begin{gather*}
-CNOT\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}|0\rangle\right) = \frac{CNOT|0\rangle|0\rangle + CNOT|1\rangle|0\rangle}{\sqrt{2}}\\
+CNOT\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\otimes |0\rangle\right) = \frac{CNOT|00\rangle + CNOT|10\rangle}{\sqrt{2}}\\
 = \frac{|00\rangle + |11\rangle}{\sqrt{2}}
 \end{gather*}
 
@@ -350,11 +350,11 @@ More generally, any state is entangled if it cannot be written as the tensor pro
 \subsection{The Mathematics of Deutsch's Algorithm}
 \label{subsec:maths-deutschs-algm}
 
-Our aim with Deutsch's Algorithm, as described in Section~\ref{sec:deutschs-algm} is to produce the state $|0\rangle$ when $f(0) = f(1)$ and the state $|1\rangle$ when $f(0) \neq f(1)$.
+Our aim with Deutsch's Algorithm, as described in Section~\ref{sec:deutschs-algm}, is to produce the state $|0\rangle$ when $f(0) = f(1)$ and the state $|1\rangle$ when $f(0) \neq f(1)$.
 
 After applying the Hadamard in line $4$ to each qubit, our two qubits are in the state $\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) \otimes \left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)$.
 
-Now, note that in cases $1$ and $4$ where $f(0) = f(1)$, we do nothing to qubit $0$. So after applying $U_f$, qubit $0$ is still in the state $\frac{|0\rangle + |1\rangle}{\sqrt{2}}$. Once we apply our final Hadamard gate, we get the state $|0\rangle$, as $H(\frac{|0\rangle + |1\rangle}{\sqrt{2}}) = |0\rangle$ as shown in Section~\ref{subsec:hadamard}.
+Now, note that in cases $1$ and $4$ where $f(0) = f(1)$, we do nothing to qubit $0$. So after applying our quantum version of $f$, qubit $0$ is still in the state $\frac{|0\rangle + |1\rangle}{\sqrt{2}}$. Once we apply our final Hadamard gate, we get the state $|0\rangle$, as $H(\frac{|0\rangle + |1\rangle}{\sqrt{2}}) = |0\rangle$ as shown in Section~\ref{subsec:maths-hadamard}.
 
 But in cases $2$ and $3$ where $f(0) \neq f(1)$, we apply a $CNOT$. Let's look at what a $CNOT$ does to our two states:
 
@@ -371,7 +371,7 @@ Qubit $0$ is now in the state $(\frac{|0\rangle - |1\rangle}{\sqrt{2}})$. When w
 \section{Further Reading}
 \label{sec:further-reading}
 
-I first heard about quantum computing from a booklet written by Ashley Montanaro at the University of Bristol, which explains many of the concepts discussed here from a theoretical perspective, including a formal proof of Deutsch's Algorithm. That booklet is available here: \url{http://www.cs.bris.ac.uk/~montanar/gameshow.pdf}
+I first heard about quantum computing from a booklet written by the University of Bristol's Ashley Montanaro, which explains many of the concepts discussed here from a theoretical perspective. That booklet is available here: \url{http://www.cs.bris.ac.uk/~montanar/gameshow.pdf}
 
 Ashley also recently gave a guest lecture on quantum computing in general, the slides of which are available here:\url{http://www.maths.bris.ac.uk/~csxam/teaching/history.pdf}
 
@@ -383,7 +383,7 @@ Juan Miguel Arrazola at the University of Waterloo has been writing a collection
 \item And part three will be coming soon, so make sure to keep an eye on their blog.
 \end{itemize}
 
-Note that while these are the easier aspects of quantum mechanics to understand, a lot of quantum mechanics in general rely on topics that are taught at GCSE or A Level Mathematics, so be careful diving straight in. But if you want to try and get ahead, some very useful mathematical concepts to learn include:
+Note that while these are the easier aspects of quantum mechanics to understand, a lot of quantum mechanics in general relies on topics that are taught at GCSE or A Level Mathematics, so be careful diving straight in. But if you want to try and get ahead, some very useful mathematical concepts to learn include:
 
 \begin{itemize}
 \item Trigonometry ($\sin, \cos$, trigonometric identities...)
