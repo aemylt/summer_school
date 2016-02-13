@@ -48,16 +48,16 @@ tabsize=2, % Number of spaces per tab in the code
 \author{Dominic Moylett\\
         	Quantum Engineering Centre for Doctoral Training,\\
 		University of Bristol,\\
-		\texttt{\href{mailto:dm1905@bristol.ac.uk}{dm1905@bristol.ac.uk}}
+		\texttt{\href{mailto:dominic.moylett@bristol.ac.uk}{dominic.moylett@bristol.ac.uk}}
 		}
 \date{\today}
 \maketitle
 
 \section{What is Quantum Computing?}
 
-Quantum physics is a collection of bizarre behaviours that happen to really small particles. The nature of quantum physics makes simulations of particles at this small level really hard, even on today's fastest computers.
+Quantum physics is a collection of bizarre behaviours that happen to really small particles. The nature of quantum physics makes simulations of these particles really hard, even on today's fastest computers.
 
-Quantum computing came about after a number of proposals by physicists such as Richard Feynman. They suggested that in order to make computers able to simulate quantum systems, we should build computers that take advantage of the same effects that make them hard to simulate on classical computers. These computers run on a very different model of computation to our current laptops, and can lead to more powerful machines in turn. In the decades that have followed since then, academics at many institutions -- including the University of Bristol -- have studied how quantum physics can benefit our technology, and how we can realise these benefits in practice.
+Quantum computing came about after a number of proposals by physicists such as Richard Feynman. They suggested that in order to make computers able to simulate quantum systems, we should build computers that take advantage of the same effects that makes quantum physics hard to simulate. These computers run on a very different model of computation to our current laptops and smart phones, and can lead to more powerful machines in turn. In the decades that have followed since then, academics at many institutions -- including the University of Bristol -- have studied how quantum physics can benefit our technology, and how we can realise these benefits in practice.
 
 In this workshop, we aim to highlight some of the strange effects of quantum physics, and how they can allow our computers to be faster and more powerful than otherwise. To do so, we will simulate a small quantum computer using the Quantum Computing Playground.
 
@@ -65,7 +65,7 @@ All you need to get started is a laptop with Google Chrome installed. Open up Go
 
 \section{Quantum Bits}
 
-A classical computer is made up of bits: $1$s and $0$s that represent data. Quantum computers store data in quantum bits, or {\em qubits}. We write qubits as $|1\rangle$ and $|0\rangle$. These symbols are called {\em kets}\footnote{This notation was invented by Paul Dirac, one of the best-known quantum physicists and originally born in Bristol.}, and are used to describe quantum states.
+A classical computer is made up of bits: $1$s and $0$s that represent data. Quantum computers store data in quantum bits, or {\em qubits}. We write qubits as $|1\rangle$ and $|0\rangle$. These symbols are called {\em kets}\footnote{This notation was invented by Paul Dirac, one of the best-known quantum physicists and born and raised in Bristol.}, and are used to describe quantum states.
 
 In the Quantum Playground, we define qubits using the command \texttt{VectorSize}, which we write at the top of our code. This specifies the number of qubits we will be using, and the playground initialises these qubits all to the value $|0\rangle$ Try running the code below by typing it into the text box, pressing ``Compile'' and then pressing ``Run'':
 
@@ -73,7 +73,7 @@ In the Quantum Playground, we define qubits using the command \texttt{VectorSize
 VectorSize 6
 \end{lstlisting}
 
-This line initialises $6$ qubits, all in the $|0\rangle$ state. We can see this on the left, where we see a black image with one white square in the bottom right hand corner. This image describes our state. Each square of this image represents a quantum state, and hovering over a square with the mouse will show us the quantum state, and numbers labelled Re and Im. The number Re is $0$ for all quantum states except for the state $|0\rangle$, where Re is $1$. We will see what these numbers mean in the next sections.
+This line initialises $6$ qubits, all in the $|0\rangle$ state. We can see this on the left, where we see a black image with one white square in the bottom left hand corner. This image describes our state. Each square of this image represents a quantum state, and hovering over a square with the mouse will show us the quantum state, and numbers labelled Re and Im. The number Re is $0$ for all quantum states except for the state $|0\rangle$, where Re is $1$. We will see what these numbers mean in the next sections.
 
 \section{Measurement}
 
@@ -85,7 +85,7 @@ MeasureBit 0
 Print "Qubit 0 is |" + measured_value + ">"
 \end{lstlisting}
 
-The second line measures the qubit and puts the result in the \texttt{measured\_value} variable. The third line displays the result.
+The second line measures qubit $0$ and puts the result in the \texttt{measured\_value} variable. The third line displays the result.
 
 From this we get the output ``Qubit $0$ is $|0\rangle$''. So, if we set all our qubits to $|0\rangle$ and measure one of them, we find that the measured qubit is in the $|0\rangle$ state.
 
@@ -93,14 +93,14 @@ From this we get the output ``Qubit $0$ is $|0\rangle$''. So, if we set all our 
 
 But data is only one half of computation. We also need be able to perform operations. Classical computers do this with logic gates, such as the $NOT$ gate, which flips a bit: $NOT(0) = 1$ and $NOT(1) = 0$.
 
-In quantum computing, we also have logic gates, which are called quantum gates. One example is the $X$ gate, which is the quantum equivalent of a classical $NOT$ gate: $X|0\rangle = |1\rangle$ and $X|1\rangle = |0\rangle$. Let's try this in the playground:
+In quantum computing, we also have logic gates, which are called quantum gates. One example is the $X$ gate, which is the quantum equivalent of a classical $NOT$ gate: $X|0\rangle = |1\rangle$ and $X|1\rangle = |0\rangle$. Let's apply an $X$ gate to qubit $0$ in the playground:
 
 \begin{lstlisting}
 VectorSize 6
 SigmaX 0
 \end{lstlisting}
 
-Now our image is black with one white square denoting an Re number of 1 for the $|1\rangle$ state. Our qubit has flipped from $|0\rangle$ to $|1\rangle$. We can also check by measuring:
+Now our image is black with one white square denoting an Re number of 1 for the $|1\rangle$ state. So qubit $0$ has flipped from $|0\rangle$ to $|1\rangle$. We can also check by measuring:
 
 \begin{lstlisting}
 VectorSize 6
@@ -109,7 +109,7 @@ MeasureBit 0
 Print "Qubit 0 is |" + measured_value + ">"
 \end{lstlisting}
 
-Now when we measure our qubit, we find that the result is $|1\rangle$. We can also check the other direction by applying $X$ to our qubit twice before measureing it, and find that $XX|0\rangle = X|1\rangle = |0\rangle$.
+Now when we measure our qubit, we find that the result is $|1\rangle$. We can also check the other direction by applying $X$ to our qubit twice before measuring it, and find that $XX|0\rangle = X|1\rangle = |0\rangle$.
 
 \section{Superposition}
 \label{sec:superposition}
@@ -121,7 +121,7 @@ VectorSize 6
 Hadamard 0
 \end{lstlisting}
 
-This now produces white squares for the states $|0\rangle$ and $|1\rangle$, both with Re numbers of $0.707107 \simeq \frac{1}{\sqrt{2}}$. Let's measure this a few times to see what happens:
+This now produces white squares for the states $|0\rangle$ and $|1\rangle$, both with Re numbers of $0.707107 \simeq \frac{1}{\sqrt{2}}$. Let's measure this state a few times to see what happens:
 
 \begin{lstlisting}
 VectorSize 6
@@ -130,7 +130,7 @@ MeasureBit 0
 Print "Qubit 0 is |" + measured_value + ">"
 \end{lstlisting}
 
-Running this multiple times, we see that some times we get $|0\rangle$ and other times we get $|1\rangle$. This is called a superposition, where measuring the qubit could give $|0\rangle$ or $|1\rangle$, and it is impossible to predict which result it will be. This is already a very useful reason for utilising quantum effects in technology, as classical computers are not good at generating numbers purely at random. And this technology is already being used for applications from security and simulations to gambling and gaming.
+Running this multiple times, we see that sometimes we get $|0\rangle$ and other times we get $|1\rangle$. This is called a superposition, where measuring the qubit could give $|0\rangle$ or $|1\rangle$, and it is impossible to predict which result it will be. This is already a very useful reason for utilising quantum effects in technology, as classical computers are not good at generating numbers purely at random. And this technology is already being used for applications from security and simulations to gambling and gaming.
 
 But how likely are we to measure $|0\rangle$ or $|1\rangle$? This is decided by the Re and Im\footnote{For this workshop, we will only focus on the Re numbers and the Im numbers will be $0$.} numbers we have seen. These numbers form the {\em amplitude}s of the state. When we measure a qubit, the probability of measuring a state with amplitude $a$ is $|a|^2$, where $|a|$ is the absolute function\footnote{The absolute function $|x|$ converts any negative numbers to positive numbers: $|-1| = |1| = 1$}. In our case, the probability of measuring $|0\rangle$ and $|1\rangle$ are both $|\frac{1}{\sqrt{2}}|^2 = (\frac{1}{\sqrt{2}})^2 = \frac{1}{2}$, so half the time we see a $|0\rangle$ and half the time we see a $|1\rangle$. Because the amplitude of each state is $\frac{1}{\sqrt{2}}$, we say that the state is:
 
@@ -165,13 +165,13 @@ $$H|1\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}}$$
 
 This explains why the results when measuring look so similar, as the probability of getting $|0\rangle$ or $|1\rangle$ is still $\frac{1}{2}$\footnote{$|-\frac{1}{\sqrt{2}}|^2 = (\frac{1}{\sqrt{2}})^2 = \frac{1}{2}$}.
 
-Like the $X$ gate, applying the Hadamard gate twice will produce the original qubit: $HH|0\rangle = H\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) = |0\rangle$ and $HH|1\rangle = H\left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right) = |1\rangle$. See the Further reading section for a formal proof of this. In fact, all quantum gates are reversible: After applying a quantum gate to a qubit, there is always another gate we can apply to get back to the original qubit.
+Like the $X$ gate, applying the Hadamard gate twice will produce the original qubit: $HH|0\rangle = H\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) = |0\rangle$ and $HH|1\rangle = H\left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right) = |1\rangle$. You can check this yourself using the Quantum Playground, or if you are more mathematically inclined, look at Section~\ref{subsec:maths-hadamard} for the mathematics behind this. In fact, all quantum gates are reversible: After applying a quantum gate to a qubit, there is always another gate we can apply to get back to the original qubit. It is only after measuring that our operations cannot be reversed.
 
 You might wonder at this point what other quantum states we can possibly make with a single qubit. The answer is that we can make any qubit of the form $a|0\rangle + b|1\rangle$, where $|a|^2 + |b|^2 = 1$.
 
 \section{Multiple Qubits}
 
-Multiple qubits act similarly to multiple classical bits, where we can apply quantum gates to the individual qubits. We represent these qubits in the {\em tensor product}. For example, suppose the first qubit is $|0\rangle$ and the second is $|1\rangle$. We write this state as $|0\rangle \otimes |1\rangle$, and often shorten it to $|01\rangle$.
+Multiple qubits act similarly to multiple classical bits, where we can apply quantum gates to the individual qubits. We represent these qubits in the {\em tensor product} $\otimes$. For example, suppose the first qubit is $|0\rangle$ and the second is $|1\rangle$. We write this state as $|0\rangle \otimes |1\rangle$, and often shorten it to $|01\rangle$.
 
 So for example, we can apply an $X$ gate to the first and second qubits as follows:
 
@@ -199,9 +199,10 @@ MeasureBit 1
 Print "Qubit 1 is |" + measured_value + ">"
 \end{lstlisting}
 
-Like single qubits, we can produce any superposition over two qubits. Thus our state can be any form of $a|00\rangle + b|01\rangle + c|10\rangle + d|11\rangle$ where $|a|^2 + |b|^2 + |c|^2 + |d|^2 = 1$.
+Like single qubits, we can produce any superposition over two qubits. Thus our state can be any form of $a|00\rangle + b|01\rangle + c|10\rangle + d|11\rangle$ where $|a|^2 + |b|^2 + |c|^2 + |d|^2 = 1$. Some example states include $|01\rangle$, $(\frac{|00\rangle + |10\rangle}{\sqrt{2}})$ and $(\frac{|00\rangle + |01\rangle + |10\rangle + |11\rangle}{2})$.
 
 \section{Entanglement}
+\label{sec:entanglement}
 
 Not all classical gates are single bit. The classical AND gate for example, takes two classical bits as input and produces one classical bit as output.
 
@@ -242,18 +243,14 @@ MeasureBit 1
 Print "Qubit 1 is |" + measured_value + ">"
 \end{lstlisting}
 
-This produces a very different result. It now appears that our measurement of qubit $0$ is random, but our measurement of qubit $1$ is always the same state as qubit $0$. If we measure qubit $1$ first; then our measurement of qubit $1$ will be random, but our measurement of qubit $0$ will always be the same state as qubit $1$. It seems that our qubits are in a superposition together, and if one collapses then the other collapses with it. We write this state as:
+This produces a very different result. It now appears that our measurement of qubit $0$ is random, but our measurement of qubit $1$ is always the same state as qubit $0$. If we measure qubit $1$ first, then our measurement of qubit $1$ will be random, but our measurement of qubit $0$ will always be the same state as qubit $1$. It seems that our qubits are in a superposition together, and if one collapses then the other collapses with it. We write this state as $(\frac{|00\rangle + |11\rangle}{\sqrt{2}})$, as shown mathematically in Section~\ref{subsec:maths-entanglement}.
 
-\begin{gather*}
-CNOT\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}|0\rangle\right) = \frac{CNOT|0\rangle|0\rangle + CNOT|1\rangle|0\rangle}{\sqrt{2}}\\
-= \frac{|00\rangle + |11\rangle}{\sqrt{2}}
-\end{gather*}
-
-This effect is called {\em entanglement}, and is one of the strangest results of quantum mechanics. It is the effect that led Albert Einstein to describe quantum mechanics as ``Spooky action at a distance''. Entangled states seem to collapse at exactly the same time, regardless of distance between the two qubits. One qubit could be at the At-Bristol Science Centre and the other at the Digimakers Moon Base\footnote{Construction pending.}, and their collapse would still be at the same time. Classically this simultaneous collapse should be impossible, as that would require one qubit to send a message to the other faster than the speed of light, breaking the laws of relativity.
+This effect is called {\em entanglement}, and is one of the strangest results of quantum mechanics. Entangled states collapse at exactly the same time, regardless of distance between the two qubits. One qubit could be at the At-Bristol Science Centre and the other could be at the Digimakers Moon Base\footnote{Construction pending.}, and their collapse would still be at the same time. Classically, this simultaneous collapse should be impossible, as it would require one qubit to send a message describing its measurement result to the other faster than the speed of light, breaking the laws of relativity. This led Albert Einstein to describe quantum mechanics as ``Spooky action at a distance.''
 
 While we haven't been able to entangle qubits between the At-Bristol Science Centre and the Digimakers Moon Base, physicists at a number of institutions, most famously Delft University of Technology, have managed to successfully entangle qubits and witness these effects before light could have travelled from one qubit to the other. So there must be something more to quantum.
 
 \section{Deutsch's Algorithm}
+\label{sec:deutschs-algm}
 
 We are now ready to see one problem where quantum computers can truly outperform classical ones, first proposed by David Deutsch. Suppose we have a classical circuit $f$, which takes one bit as input and returns one bit as output. In other words, $f(0)$ is either $0$ or $1$ and $f(1)$ is either $0$ or $1$. Deutsch's problem is to determine if $f(0) = f(1)$.
 
@@ -272,52 +269,107 @@ MeasureBit 0
 Print "Qubit 0 is |" + measured_value + ">"
 \end{lstlisting}
 
-For line 5, we pick what operation to run based on what we want $f(0)$ and $f(1)$ to be. This quantum operator is called $U_f$, and is formally stated as $U_f|x\rangle|y\rangle = |x\rangle|y \oplus f(x)\rangle$, where $\oplus$ is the exclusive-OR (XOR) gate. It might seem difficult to implement a quantum gate like this, but we can actually do it very easily, based on what the function $f$ is.
+For line 5, we pick what operation to run based on what we want $f(0)$ and $f(1)$ to be. The four possibilities are outlined below:
 
-Case $1$: If you want $f(0) = 0 \text{ and } f(1) = 0$, then delete line $5$.
+\begin{description}
+    \item[Case $1$:] If you want $f(0) = 0 \text{ and } f(1) = 0$, then delete line $5$.
 
-Case $2$: If you want $f(0) = 0 \text{ and } f(1) = 1$, then replace line $5$ with:
+    \item[Case $2$:] If you want $f(0) = 0 \text{ and } f(1) = 1$, then replace line $5$ with:
 
-\begin{lstlisting}
-CNOT 0, 1
-\end{lstlisting}
+    \begin{lstlisting}
+    CNOT 0, 1
+    \end{lstlisting}
 
-Case $3$: If you want $f(0) = 1 \text{ and } f(1) = 0$, then replace line $5$ with:
+    \item[Case $3$:] If you want $f(0) = 1 \text{ and } f(1) = 0$, then replace line $5$ with:
 
-\begin{lstlisting}
-CNOT 0, 1
-SigmaX 1
-\end{lstlisting}
+    \begin{lstlisting}
+    CNOT 0, 1
+    SigmaX 1
+    \end{lstlisting}
 
-Case $4$: Or if you want $f(0) = 1 \text{ and } f(1) = 0$, then replace line $5$ with:
+    \item[Case $4$:] Or if you want $f(0) = 1 \text{ and } f(1) = 0$, then replace line $5$ with:
 
-\begin{lstlisting}
-SigmaX 1
-\end{lstlisting}
+    \begin{lstlisting}
+    SigmaX 1
+    \end{lstlisting}
+\end{description}
 
-If we run the full program, we find that if $f(0) = f(1)$ (cases $1$ and $4$) then qubit $0$ is in the $|0\rangle$ state, and if $f(0) \neq f(1)$ (cases $2$ and $3$) then qubit $0$ is in the $|1\rangle$ state. Thus we have solved the problem with only one query of $f$. David Deutsch and Richard Jozsa\footnote{Richard Jozsa is another famous physicist who was previously a lecturer here in Bristol.} later showed that a similar problem requires many queries on a classical computer, but just one on a quantum computer.
+If we run the full program, we find that if $f(0) = f(1)$ (cases $1$ and $4$) then qubit $0$ is in the $|0\rangle$ state, and if $f(0) \neq f(1)$ (cases $2$ and $3$) then qubit $0$ is in the $|1\rangle$ state. Thus we have solved the problem with only one query of $f$. See section \ref{subsec:maths-deutschs-algm} for a mathematical explanation of this. David Deutsch and Richard Jozsa\footnote{Richard Jozsa is another famous physicist who was previously a professor in the Department of Computer Science at the University of Bristol.} later showed that a similar problem requires many queries on a classical computer, but just one on a quantum computer.
 
-A formal proof is in the Further Reading, but to give some intuition about this effect, after applying the Hadamard to each qubit, our two qubits are in the state $\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) \otimes \left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)$. Now, note that in cases $1$ and $4$, we do nothing to qubit $0$, so after applying $U_f$, qubit $0$ is still in the state $\frac{|0\rangle + |1\rangle}{\sqrt{2}}$. But in cases $2$ and $3$, we apply a $CNOT$. With our two qubits in their current state, the $CNOT$ does change qubit $0$, making it become $\frac{|0\rangle - |1\rangle}{\sqrt{2}}$. So the Hadamard in line $8$ converts qubit $0$ to $|0\rangle$ if $f(0) = f(1)$, and $|1\rangle$ if $f(0) \neq f(1)$ -- recall from Section \ref{sec:superposition} that $H\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) = |0\rangle$ and $H\left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right) = |1\rangle$.
-
-Of course, in this case we can see the code that make up $U_f$ and thus figure out if $f(0) = f(1)$ by seeing if there is a $CNOT$ in the code. But Deutsch's algorithm also works if we cannot see the code within the quantum operator $U_f$. If we are just given a black box which we are told implements $U_f$ then we can still figure out if $f(0) = f(1)$.
+Of course, in this case we can figure out if $f(0) = f(1)$ by just looking at the code. But Deutsch's algorithm also works if we cannot see the code. If we are just given a black box which we are told implements the quantum version of $f$, then we can still figure out if $f(0) = f(1)$.
 
 This problem doesn't sound very useful, but there are many more practical problems which quantum computers can do better than classical computers:
 
 \begin{itemize}
-\item Charles Bennett and Stephen Wiesner showed that you can send two classical bits from one person to another by just sending one qubit from one to the other through a technique called superdense coding.
-\item Searching through an unsorted list of $n$ items for a particular item requires $n$ classical queries -- one for each item. Lov Grover showed that we can do this with $\sqrt{n}$ queries on a quantum computer.
-\item Peter Shor showed that you can efficiently find the prime factors of a number on a quantum computer. This problem is believed to be hard classically, as finding an efficient solution would break the RSA encryption scheme.
+\item Charles Bennett and Stephen Wiesner showed that you can send two classical bits from one person to another by just sending one qubit from one to the other using entanglement in a technique called superdense coding.
+\item Searching through an unsorted list of items for a particular item classically requires you to look at every item in that list. Lov Grover showed that we could do this on a quantum computer by looking at the list much fewer times.
+\item Peter Shor showed that you can efficiently find the prime factors of a number on a quantum computer. This problem is believed to be hard classically, as finding an efficient solution would break the RSA encryption scheme, thus potentially giving hackers access to everything from your Facebook account to your online banking details.
 \end{itemize}
 
 \section{Where is my Quantum Computer?}
 
-You can buy one right now! D-Wave Systems already sell quantum computers, but these computers are only built for solving a very specific problem called quantum annealing. But they are on the market, and Google are currently seeing how useful the quantum annealer they bought from D-Wave is for their business.
+You can buy one right now! D-Wave Systems already sell quantum computers, though these computers are only built for solving a very specific problem called quantum annealing. But they are on the market, and Google are currently seeing how useful the quantum annealer they bought from D-Wave is for their business.
 
-But what is more interesting in the Physics community is when will we see a {\em universal quantum computer} -- a computer that can perform any quantum computation -- on the market. And the answer is we don't know, but you can use one right now! The Centre for Quantum Photonics at the University of Bristol connected their two qubit universal quantum computer to the Internet, in what they call the Quantum in the Cloud project. You can find out more about this work here: \url{http://www.bristol.ac.uk/physics/research/quantum/outreach/qcloud/}
+But what is more interesting in the Physics community is when will we see a {\em universal quantum computer} -- a computer that can perform any quantum computation -- on the market. And the answer is we don't know, but you can use one right now! The Centre for Quantum Photonics at the University of Bristol connected their two qubit universal quantum computer to the Internet so that anyone can have a go at programming on it, in what they call the Quantum in the Cloud project. You can find out more about this work here: \url{http://www.bristol.ac.uk/physics/research/quantum/outreach/qcloud/}
 
-But two qubits is not very useful: When are we going to get many qubit universal quantum computers? Again, we don't know, but potentially soon: John Martinis at the University of California, Santa Barbara is hoping to develop a $100$ qubit universal quantum computer in 2-3 years; Microsoft Research predicts a quantum computer in ten years; and others have predicted between five and forty years. Regardless of when it comes, one thing is certain: There's a lot of excitement surrounding quantum computers right here and now.
+But two qubits is not very useful; when are we going to get universal quantum computers with many qubits? Again, we don't know, but potentially soon: John Martinis at the University of California, Santa Barbara is hoping to develop a $100$ qubit universal quantum computer in 2-3 years; Microsoft Research predicts a quantum computer in ten years; and others have predicted between five and forty years. Regardless of when it comes, one thing is certain: There's a lot of excitement surrounding quantum computers right here and now.
+
+\section{More Mathematics}
+
+This section contains some of the more challenging mathematics behind the concepts here and is aimed at those who are more mathematically experienced. If you are not as interested in the more formal theory of these concepts then feel free to skip ahead to Section~\ref{sec:further-reading}.
+
+One important property with all the mathematics shown in this section is that all quantum gates are {\em linear}, so applying a gate to a superposition of states is equivalent to applying a gate to each of those states individually. For example, if we apply an $X$ gate to the state $(a|0\rangle + b|1\rangle)$ then we get the state:
+
+$$X(a|0\rangle + b|1\rangle) = (aX|0\rangle + bX|1\rangle) = (a|1\rangle + b|0\rangle)$$
+
+\subsection{Hadamards are Reversible}
+\label{subsec:maths-hadamard}
+
+In Section~\ref{sec:superposition}, I stated that $H$ reverses itself: $HH|0\rangle = |0\rangle$. Let's check this:
+
+\begin{gather*}
+    HH|0\rangle = H(\frac{|0\rangle + |1\rangle}{\sqrt{2}}) = \frac{H|0\rangle + H|1\rangle}{\sqrt{2}}\\
+    = \frac{1}{\sqrt{2}}(\frac{|0\rangle + |1\rangle}{\sqrt{2}} + \frac{|0\rangle - |1\rangle}{\sqrt{2}})\\
+    = \frac{|0\rangle + |1\rangle + |0\rangle - |1\rangle}{2} = \frac{2|0\rangle}{2} = |0\rangle\\
+\end{gather*}
+
+A similar proof can be done for showing that $HH|1\rangle = |1\rangle$.
+
+\subsection{The Mathematics Behind Entanglement}
+\label{subsec:maths-entanglement}
+
+I stated in Section~\ref{sec:entanglement} that the entangled state we get after using the $CNOT$ operator is $\frac{|00\rangle + |11\rangle}{\sqrt{2}}$. The mathematical proof of this is below:
+
+\begin{gather*}
+CNOT\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}|0\rangle\right) = \frac{CNOT|0\rangle|0\rangle + CNOT|1\rangle|0\rangle}{\sqrt{2}}\\
+= \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+\end{gather*}
+
+More generally, any state is entangled if it cannot be written as the tensor product of individual qubits. For example, $(\frac{|00\rangle + |01\rangle}{\sqrt{2}})$ is not entangled as it can be written as $|0\rangle \otimes \frac{|0\rangle + |1\rangle}{\sqrt{2}}$, but $\frac{|01\rangle + |10\rangle}{\sqrt{2}}$ is entangled.
+
+\subsection{The Mathematics of Deutsch's Algorithm}
+\label{subsec:maths-deutschs-algm}
+
+Our aim with Deutsch's Algorithm, as described in Section~\ref{sec:deutschs-algm} is to produce the state $|0\rangle$ when $f(0) = f(1)$ and the state $|1\rangle$ when $f(0) \neq f(1)$.
+
+After applying the Hadamard in line $4$ to each qubit, our two qubits are in the state $\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) \otimes \left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)$.
+
+Now, note that in cases $1$ and $4$ where $f(0) = f(1)$, we do nothing to qubit $0$. So after applying $U_f$, qubit $0$ is still in the state $\frac{|0\rangle + |1\rangle}{\sqrt{2}}$. Once we apply our final Hadamard gate, we get the state $|0\rangle$, as $H(\frac{|0\rangle + |1\rangle}{\sqrt{2}}) = |0\rangle$ as shown in Section~\ref{subsec:hadamard}.
+
+But in cases $2$ and $3$ where $f(0) \neq f(1)$, we apply a $CNOT$. Let's look at what a $CNOT$ does to our two states:
+
+\begin{gather*}
+CNOT\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) \otimes \left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)\\
+= CNOT\left(\frac{|00\rangle - |01\rangle + |10\rangle - |11\rangle}{2}\right)\\
+= \frac{CNOT|00\rangle - CNOT|01\rangle + CNOT|10\rangle - CNOT|11\rangle}{2}\\
+= \frac{|00\rangle - |01\rangle + |11\rangle - |10\rangle}{2}\\
+= \left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right) \otimes \left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)
+\end{gather*}
+
+Qubit $0$ is now in the state $(\frac{|0\rangle - |1\rangle}{\sqrt{2}})$. When we apply a Hadamard to this state, we get the state $|1\rangle$ as desired!
 
 \section{Further Reading}
+\label{sec:further-reading}
 
 I first heard about quantum computing from a booklet written by Ashley Montanaro at the University of Bristol, which explains many of the concepts discussed here from a theoretical perspective, including a formal proof of Deutsch's Algorithm. That booklet is available here: \url{http://www.cs.bris.ac.uk/~montanar/gameshow.pdf}
 
@@ -339,6 +391,6 @@ Note that while these are the easier aspects of quantum mechanics to understand,
 \item Linear algebra (Matrices, vectors, eigenvalues \& eigenvectors...)
 \end{itemize}
 
-All of these concepts come up on a regular basis in quantum physics, so if you want more of a reason to study these concepts, now's your chance.
+All of these concepts come up on a regular basis in quantum physics, so if you want more of a reason to study these concepts, now is your chance!
 
 \end{document}
