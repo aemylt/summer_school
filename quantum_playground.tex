@@ -291,7 +291,7 @@ For line 5, we pick what operation to run based on what we want $f(0)$ and $f(1)
 
 If we run the full program, we find that if $f(0) = f(1)$ (cases $1$ and $4$) then qubit $0$ is in the $|0\rangle$ state, and if $f(0) \neq f(1)$ (cases $2$ and $3$) then qubit $0$ is in the $|1\rangle$ state. Thus we have solved the problem with only one query of $f$. See section \ref{subsec:maths-deutschs-algm} for a mathematical explanation of this. David Deutsch and Richard Jozsa\footnote{Richard Jozsa is another famous physicist who was previously a professor in the Department of Computer Science at the University of Bristol.} later showed that a similar problem requires many queries on a classical computer, but just one on a quantum computer.
 
-Of course, in this case we can figure out if $f(0) = f(1)$ by just looking at the code. But Deutsch's algorithm also works if we cannot see the code. If we are just given a black box which we are told implements the quantum version of $f$, then we can still figure out if $f(0) = f(1)$.
+Of course, in this case we can figure out if $f(0) = f(1)$ by just looking at the code. But Deutsch's algorithm also works if we cannot see the code. If we are just given a black box which we are told implements the quantum version of $f$, then we can still figure out if $f(0) = f(1)$. YouTube channel Frame of Essence gives a high-level explanation for why this algorithm works in their video on quantum computing, which you can watch here: https://www.youtube.com/watch?v=ZoT82NDpcvQ
 
 This problem doesn't sound very useful, but there are many more practical problems which quantum computers can do better than classical computers:
 
