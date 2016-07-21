@@ -8,6 +8,7 @@
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{booktabs}
 \usepackage{amsmath}
+\usepackage{amsthm}
 
 \setlength{\parskip}{1em}
 
@@ -41,6 +42,8 @@ stringstyle=\color{Purple}, % Strings are purple
 tabsize=2, % Number of spaces per tab in the code
 }
 
+\newtheorem{task}{Task}[section]
+
 \begin{document}
 \lstset{style=Style1}
 
@@ -71,27 +74,29 @@ To understand quantum computing, we will use QCEngine, a quantum computing simul
 
 A classical computer is made up of bits: $1$s and $0$s that represent data. Quantum computers store data in quantum bits, or {\em qubits}. We write qubits as $|1\rangle$ and $|0\rangle$. These symbols are called {\em kets}\footnote{This notation was invented by Paul Dirac, one of the best-known quantum physicists and born and raised in Bristol.}, and are used to describe quantum states.
 
-In the Quantum Playground, we define qubits using the command \texttt{VectorSize}, which we write at the top of our code. This specifies the number of qubits we will be using, and the playground initialises these qubits all to the value $|0\rangle$ Try running the code below by typing it into the text box, pressing ``Compile'' and then pressing ``Run'':
+In QCEngine, we define qubits using the command \texttt{qc.reset}, which we write at the top of our code. This specifies the number of qubits we will be using. We then set these qubits to $|0\rangle$ using the command \texttt{qc.write(0)} Try running the code below by typing it into the text box, pressing ``Compile'' and then pressing ``Run'':
 
 \begin{lstlisting}
-VectorSize 6
+qc.reset(1);
+qc.write(0);
 \end{lstlisting}
 
-This line initialises $6$ qubits, all in the $|0\rangle$ state. We can see this on the left, where we see a black image with one white square in the bottom left hand corner. This image describes our state. Each square of this image represents a quantum state, and hovering over a square with the mouse will show us the quantum state, and numbers labelled Re and Im. The number Re is $0$ for all quantum states except for the state $|0\rangle$, where Re is $1$. We will see what these numbers mean in the next sections.
+This line initialises $1$ qubit in the $|0\rangle$ state. We can see this in the box on the right, under the section ``State Vector''. This section shows a blue circle for the $|0\rangle$ state and a white circle for the $|1\rangle$ state, meaning that the state is $|0\rangle$. We can also write \texttt{qc.write(1)} to set the state to $|1\rangle$.
 
 \section{Measurement}
 
-While images like this showing off our complete quantum state are nice, we cannot look at quantum states this way in practice. Instead, we have to {\em measure} our qubits. We can do this using the \texttt{MeasureBit} command:
+While images like this showing off our complete quantum state are nice, we cannot look at quantum states this way in practice. Instead, we have to {\em measure} our qubits. We can do this using the \texttt{qc.read} command:
 
 \begin{lstlisting}
-VectorSize 6
-MeasureBit 0
-Print "Qubit 0 is |" + measured_value + ">"
+qc.reset(1);
+qc.write(0);
+var result = qc.read();
+qc.print("Qubit 0 is |" + result + ">\n");
 \end{lstlisting}
 
-The second line measures qubit $0$ and puts the result in the \texttt{measured\_value} variable. The third line displays the result.
+The third line measures qubit $0$ and puts the result in the \texttt{result} variable. The fourth line displays the result.
 
-From this we get the output ``Qubit $0$ is $|0\rangle$''. So, if we set all our qubits to $|0\rangle$ and measure one of them, we find that the measured qubit is in the $|0\rangle$ state.
+From this we get the output ``Qubit $0$ is $|0\rangle$''. So, if we set our qubit to $|0\rangle$ and measure it, we find that the measured qubit is in the $|0\rangle$ state.
 
 \section{Quantum Gates}
 
@@ -100,20 +105,26 @@ But data is only one half of computation. We also need be able to perform operat
 In quantum computing, we also have logic gates, which are called quantum gates. One example is the $X$ gate, which is the quantum equivalent of a classical $NOT$ gate: $X|0\rangle = |1\rangle$ and $X|1\rangle = |0\rangle$. Let's apply an $X$ gate to qubit $0$ in the playground:
 
 \begin{lstlisting}
-VectorSize 6
-SigmaX 0
+qc.reset(1);
+qc.write(0);
+qc.not()
 \end{lstlisting}
 
-Now our image is black with one white square denoting an Re number of 1 for the $|1\rangle$ state. So qubit $0$ has flipped from $|0\rangle$ to $|1\rangle$. We can also check by measuring:
+Now our circles have swapped; the blue circle is now above the $|0\rangle$ state and the white circle is now above the $|1\rangle$ state, just like we saw when we initialised our qubit to $|1\rangle$. So qubit $0$ has flipped from $|0\rangle$ to $|1\rangle$. We can also check by measuring:
 
 \begin{lstlisting}
-VectorSize 6
-SigmaX 0
-MeasureBit 0
-Print "Qubit 0 is |" + measured_value + ">"
+qc.reset(1);
+qc.write(0);
+qc.not()
+var result = qc.read();
+qc.print("Qubit 0 is |" + result + ">\n");
 \end{lstlisting}
 
-Now when we measure our qubit, we find that the result is $|1\rangle$. We can also check the other direction by applying $X$ to our qubit twice before measuring it, and find that $XX|0\rangle = X|1\rangle = |0\rangle$.
+Now when we measure our qubit, we find that the result is $|1\rangle$. We can also check the other direction by applying $X$ to a qubit in the $|1\rangle$ state and find that $X|1\rangle = |0\rangle$.
+
+\begin{task}
+What happens if we apply $X$ twice to one state? Check your answer by running it in the engine.
+\end{task}
 
 \section{Superposition}
 \label{sec:superposition}
