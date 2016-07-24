@@ -1,0 +1,251 @@
+% Dominic Moylett - December 2015/January 2016
+% LaTeX template courtesy of Thomas Mortensson, Ben Collins, Graham Laming and Rob Briggs: https://github.com/thomasmortensson/bristolraspberrypipythontutorial/
+
+\documentclass[twocolumn]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\setlength{\parskip}{1em}
+
+\renewcommand{\familydefault}{\sfdefault}
+\definecolor{DarkGreen}{rgb}{0.0,0.4,0.0} % Comment color
+\definecolor{highlight}{RGB}{255,251,204} % Code highlight color
+
+\lstdefinestyle{Style1}{ % Define a style for your code snippet, multiple definitions can be made if, for example, you wish to insert multiple code snippets using different programming languages into one document
+language=C, % Detects keywords, comments, strings, functions, etc for the language specified
+backgroundcolor=\color{highlight}, % Set the background color for the snippet - useful for highlighting
+basicstyle=\footnotesize\ttfamily, % The default font size and style of the code
+breakatwhitespace=false, % If true, only allows line breaks at white space
+breaklines=true, % Automatic line breaking (prevents code from protruding outside the box)
+captionpos=b, % Sets the caption position: b for bottom; t for top
+commentstyle=\usefont{T1}{pcr}{m}{sl}\color{DarkGreen}, % Style of comments within the code - dark green courier font
+deletekeywords={}, % If you want to delete any keywords from the current language separate them by commas
+%escapeinside={\%}, % This allows you to escape to LaTeX using the character in the bracket
+firstnumber=1, % Line numbers begin at line 1
+frame=single, % Frame around the code box, value can be: none, leftline, topline, bottomline, lines, single, shadowbox
+frameround=tttt, % Rounds the corners of the frame for the top left, top right, bottom left and bottom right positions
+keywordstyle=\color{Blue}\bf, % Functions are bold and blue
+morekeywords={VectorSize, SigmaX, Hadamard, CNot, MeasureBit, Print, measured_value}, % Add any functions no included by default here separated by commas
+numbers=left, % Location of line numbers, can take the values of: none, left, right
+numbersep=5pt, % Distance of line numbers from the code box
+numberstyle=\tiny\color{Gray}, % Style used for line numbers
+rulecolor=\color{black}, % Frame border color
+showstringspaces=false, % Don't put marks in string spaces
+showtabs=false, % Display tabs in the code as lines
+stepnumber=1, % The step distance between line numbers, i.e. how often will lines be numbered
+stringstyle=\color{Purple}, % Strings are purple
+tabsize=2, % Number of spaces per tab in the code
+}
+
+\newtheorem{task}{Task}[section]
+
+\begin{document}
+\lstset{style=Style1}
+
+\title{Session 3: Using Light to Create a Quantum Computer}
+\author{Dominic Moylett\\
+        	Quantum Engineering Centre for Doctoral Training,\\
+		University of Bristol\\
+		\texttt{\href{mailto:dominic.moylett@bristol.ac.uk}{dominic.moylett@bristol.ac.uk}}
+		}
+\date{\today}
+\maketitle
+
+\section*{Worksheet Details}
+
+This worksheet is for the third session of the Quantum Computing day in the 2016 ``Quantum in the Summer'' school. In the previous sessions, we have seen how a quantum computer works and some of the problems that we have managed to speed up thanks to quantum computing. Now, this session will look at how we might build a quantum computer using photons: particles of light. Work on building such a computer is being completed right now within the Centre for Quantum Photonics at the University of Bristol.
+
+\section{Why Light?}
+\label{sec:why}
+
+Throughout this summer school you have seen some of the quantum properties of photons, which are particles of light. These quantum properties led to one of the first proposals of implementing a quantum gate to be done in linear optics, by Gerard James Milburn in 1989. Since then, proposals for a general purpose quantum computers were proposed as early as 2001, and there is a big push right now to develop and implement more practical schemes for a quantum computer.
+
+But why do we want to consider a quantum computer using photons? The answer is that there are a variety of reasons. The first benefit is that photons are already used for communication -- we use them in fibre optic cables all the time -- so it is convenient for communication between quantum computers.
+
+Another benefit is that it is possible to make optical setup really small, even fitting them onto a single silicon chip. The Centre for Quantum Photonics is researching how we can make practical quantum computers on chips this small so that we can piggyback off the decades of work on silicon chips in the electronics industry and have a platform that can easily scale.
+
+It is worth noting however that optics also has its disadvantages. In particular, it is hard to make photons interact with one another, resulting in problems which we shall see in the final section. But, work is currently being done on how we can avoid these issues.
+
+\section{Qubits and Measurement}
+
+So what does an optical qubit look like? There are many ways we can encode a qubit in a photon, but the way we will look at today in particular is called {\em path encoding}. Essentially, we encode the qubit as a single photon travelling down one of two paths. If the photon is in one mode, we say that it is in the $|0\rangle$ state, and if the photon is in the other mode we say that it is in the $|1\rangle$ state.
+
+We can implement the above encoding using the QCEngine. To do so, we will need to use the command \texttt{qc.start\_photon\_sim} to tell the engine that we are now going to be using linear optics.
+
+\begin{lstlisting}
+qc.reset(2);
+qc.write(1);
+qc.start_photon_sim();
+\end{lstlisting}
+
+You can also now see that we have an option called ``Fock state''. The Fock state of a quantum system is related to linear optics, and describes how many photons are going down a specific path at a given point in time. In the case above, we have one photon in the first mode and none in the second, so our Fock state is $|1-\rangle$.
+
+So if this is how we encode a qubit, how do we measure which state it is in? This is done using single photon detectors. A single photon detector will release an electrical signal whenever a photon reaches it. By placing detectors on both the $|0\rangle$ and $|1\rangle$ path and waiting for one of them to register a photon, we can see which path the photon was in and thus measure the state.
+
+To detect which path a photon is in, we can use the $qc.read$ command:
+
+\begin{lstlisting}
+qc.reset(2);
+qc.write(1);
+qc.start_photon_sim();
+qc.read();
+\end{lstlisting}
+
+So if we have a photon in the $|0\rangle$ path and measure it, we find that the photon is in the $|0\rangle$ path.
+
+\section{Beam Splitters}
+
+Now that we have an understanding of how we will be encoding our qubits, we need to apply gates to them. We can do this using a variety of optical components.
+
+The first gate we shall be using is a beam splitter. A beam splitter is a partial mirror, which will with some probability $r$ reflect the photon and with probability $1 - r$ let the photon pass through. The probability of the beam splitter reflecting is known as its {\em reflectivity}.
+
+We can use this component in our optical quantum computer to generate a superposition:
+
+\begin{lstlisting}
+qc.reset(2);
+qc.write(1);
+qc.start_photon_sim();
+qc.dual_rail_beamsplitter(0.5, 1|2);
+qc.read();
+\end{lstlisting}
+
+By clicking back and forth from the detectors, we can see that half of the time  our photon is in the $|0\rangle$ path, and half the time our photon is in the $|1\rangle$ path. This is similar to what we had with the Hadamard gate.
+
+But the Hadamard gate wasn't just special for resulting in $|0\rangle$ half the time and $|1\rangle$ half the time. The other important property of the Hadamard gate was that applying it twice resulted in us seeing the original state again. Do we see the same effect when using a $50$-$50$ beam splitter twice?
+
+\begin{lstlisting}
+qc.reset(2);
+qc.write(1);
+qc.start_photon_sim();
+qc.dual_rail_beamsplitter(0.5, 1|2);
+qc.dual_rail_beamsplitter(0.5, 1|2);
+qc.read();
+\end{lstlisting}
+
+It seems that we do not. If we start in the Fock state $|1-\rangle$ and apply a beam splitter twice, we end up with the state $|-1\rangle$. Likewise if we start in the state $|1-\rangle$ we end in $|1-\rangle$. So applying a beam splitter twice does not give us the original state, but instead flips the qubit\footnote{Applying the operator twice also adds some phase to the overall state, which we will not worry about.}.
+
+The reason for this is because a beam splitter does not produce the same state as a Hadamard gate does. This is because when a photon is reflected off the beam splitter, a phase is introduced to that photon. So while the state we measure after sending a photon in path $|0\rangle$ through might be $|0\rangle$, the actual state would be $i|0\rangle$, where $i = \sqrt{-1}$.
+
+We can however make the photon come out its original path by placing a phase controller on one of the photon paths between the two beam splitters. In linear optics on integrated circuits, this can be done by just placing a heater next to the photon path:
+
+\begin{lstlisting}
+qc.reset(2);
+qc.write(1);
+qc.start_photon_sim();
+qc.dual_rail_beamsplitter(0.5, 1|2);
+qc.phase(180, 1);
+qc.dual_rail_beamsplitter(0.5, 1|2);
+qc.read();
+\end{lstlisting}
+
+The above code will apply a phase of $180^\circ$ to any photons in the $|0\rangle$ path. This is enough to cause the single photons to interfere differently and result in the photon exiting the $|0\rangle$ path. It is worth noting however that this is still not strictly the same as the Hadamard gate.
+
+\begin{task}
+The first argument of the $qc.phase$ argument can be any number from $0$ to $360$. Try placing different numbers in and seeing how often you measure $|0\rangle$ or $|1\rangle$. Some numbers you try might produce a random state, so try running them multiple times. This experiment is an example of a Mach-Zender interferometer.
+\end{task}
+
+\section{Controlled-NOT}
+
+So we can get a superposition with linear optics, but can we generate entanglement? Well, we saw in the first session that if we can generate a superposition and implement a $CNOT$ gate, then we can generate an entangled pair of qubits. We already have one of those, so all we need to do is create a $CNOT$ and then we're done!
+
+Unfortunately, implementing the $CNOT$ is where our current method for implementing a quantum computer using linear optics really starts to struggle. This comes back to the point made in Section \ref{sec:why}: Photons do not interact well with each other. So we need to be smarter in order to implement this gate.
+
+To start with, we will implemented a related gate, which we shall call $CZ$ for Controlled-$Z$\footnote{Recall that $Z|0\rangle = |0\rangle$ and $Z|1\rangle = -|1\rangle$.}. We will implement this gate using six photon paths: Two for the control qubit, two for the target qubit, and two as ancilla ports. The gate can be implemented using beam splitters with reflectivity $1/3$:
+
+\begin{lstlisting}
+qc.reset(6);
+qc.write(4|8);
+qc.start_photon_sim();
+
+qc.dual_rail_beamsplitter(1.0/3.0, 1|2);
+qc.dual_rail_beamsplitter(1.0/3.0, 4|8);
+qc.dual_rail_beamsplitter(1.0/3.0, 16|32);
+
+qc.stop_photon_sim();
+qc.read();
+\end{lstlisting}
+
+\begin{task}
+Try running this code a few times. If the operation works correctly then you should see a blue circle with the line pointing downwards in the state $|12\rangle$, indicating that the target qubit's $|0\rangle$ state has phase $-1$. How often does this happen? Can you see any patterns when it does happen?
+\end{task}
+
+Unfortunately, this gate will not always work. In fact, if you try running it right now, it will almost never work as we want it to.
+
+The cases in which it does work satisfy the following properties:
+
+\begin{itemize}
+\item There are no qubits in the first and last photon modes,
+\item and there is exactly one photon in the control qubit paths
+\item and there is exactly one photon in the target qubit paths.
+\end{itemize}
+
+If any of these cases don't hold, then our gate will not operate as it should. So, let's only perform the rest of the computation when they do hold. This idea is known as {\em postselection}, where we only consider those cases where the circuit would work as it is intended to. We can add these conditions with the following code:
+
+\begin{lstlisting}
+qc.reset(6);
+qc.write(4|8);
+qc.start_photon_sim();
+
+qc.dual_rail_beamsplitter(1.0/3.0, 1|2);
+qc.dual_rail_beamsplitter(1.0/3.0, 4|8);
+qc.dual_rail_beamsplitter(1.0/3.0, 16|32);
+
+qc.postselect(0, 1|32);
+qc.postselect_qubit_pair(2|4);
+qc.postselect_qubit_pair(8|16);
+qc.stop_photon_sim();
+qc.read();
+\end{lstlisting}
+
+Running this now, we can see that this always produces the state $-|10\rangle$ when starting with the state $|10\rangle$.
+
+\begin{task}
+\label{task:cz}
+Try running the Controlled-$Z$ operation on the other states:
+\begin{itemize}
+\item $|11\rangle$ corresponds to \texttt{qc.write(4|16)}
+\item $|00\rangle$ corresponds to \texttt{qc.write(2|8)}
+\item $|01\rangle$ corresponds to \texttt{qc.write(2|16)}
+\end{itemize}
+
+These cases should all produce the original state.
+\end{task}
+
+Now we need to implement our $CNOT$. To do this, we shall reuse a trick from session 1. Remember in teleportation when we performed a Controlled-$Z$ operation consisting of a Hadamard, a $CNOT$ and another Hadamard? Well, we can similarly perform a $CNOT$ by performing a Hadamard, a Controlled-$Z$ and another Hadamard. Of course, we have not seen how to implement a Hadamard gate using linear optics. But we have seen a beam splitter, which is close to a Hadamard. So let's try using that instead:
+
+\begin{lstlisting}
+qc.reset(6);
+qc.write(4|8);
+qc.start_photon_sim();
+
+qc.dual_rail_beamsplitter(0.5, 8|16);
+
+qc.dual_rail_beamsplitter(1.0/3.0, 1|2);
+qc.dual_rail_beamsplitter(1.0/3.0, 4|8);
+qc.dual_rail_beamsplitter(1.0/3.0, 16|32);
+
+qc.dual_rail_beamsplitter(0.5, 8|16);
+
+qc.postselect(0, 1|32);
+qc.postselect_qubit_pair(2|4);
+qc.postselect_qubit_pair(8|16);
+qc.stop_photon_sim();
+qc.read();
+\end{lstlisting}
+
+Now, when our control photon is in the $|1\rangle$ path, our target photon will be in the same path it started in, but if our control photon is in the $|0\rangle$ path, the target photon will be in the opposite path to what it started in.
+
+\begin{task}
+Verify the above claim by running the circuit on the different input states. To change the input state, follow the same instructions as for Task \ref{task:cz}.
+\end{task}
+
+\begin{task}
+How could you use this gate to generate entangled qubits?
+\end{task}
+
+\end{document}
