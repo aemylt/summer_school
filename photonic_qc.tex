@@ -63,36 +63,38 @@ This worksheet is for the third session of the Quantum Computing day in the 2016
 \section{Why Light?}
 \label{sec:why}
 
-Throughout this summer school you have seen some of the quantum properties of photons, which are particles of light. These quantum properties led to one of the first proposals of implementing a quantum gate to be done in linear optics, by Gerard James Milburn in 1989. Since then, proposals for a general purpose quantum computers were proposed as early as 2001, and there is a big push right now to develop and implement more practical schemes for a quantum computer.
+Throughout this summer school you have seen some of the quantum properties of photons, which are particles of light. These quantum properties led to one of the first proposals of implementing a quantum gate to be done in linear optics, by Gerard James Milburn in 1989. Since then, designs for general purpose quantum computers have been proposed as early as 2001, and there is a big push right now to develop and implement more practical schemes for a quantum computer.
 
 But why do we want to consider a quantum computer using photons? The answer is that there are a variety of reasons. The first benefit is that photons are already used for communication -- we use them in fibre optic cables all the time -- so it is convenient for communication between quantum computers.
 
-Another benefit is that it is possible to make optical setup really small, even fitting them onto a single silicon chip. The Centre for Quantum Photonics is researching how we can make practical quantum computers on chips this small so that we can piggyback off the decades of work on silicon chips in the electronics industry and have a platform that can easily scale.
+Another benefit is that it is possible to make optical setup really small, even fitting them onto a single silicon chip. The Centre for Quantum Photonics is researching how we can make practical quantum computers on chips this small so that we can piggyback off the decades of work on silicon chips in the electronics industry.
 
 It is worth noting however that optics also has its disadvantages. In particular, it is hard to make photons interact with one another, resulting in problems which we shall see in the final section. But, work is currently being done on how we can avoid these issues.
 
 \section{Qubits and Measurement}
 
-So what does an optical qubit look like? There are many ways we can encode a qubit in a photon, but the way we will look at today in particular is called {\em path encoding}. Essentially, we encode the qubit as a single photon travelling down one of two paths. If the photon is in one mode, we say that it is in the $|0\rangle$ state, and if the photon is in the other mode we say that it is in the $|1\rangle$ state.
+So what does an optical qubit look like? There are many ways we can encode a qubit in a photon, but the way we will look at today in particular is called {\em path encoding}. Essentially, we encode the qubit as a single photon travelling down one of two paths. If the photon is in one path, we say that it is in the $|0\rangle$ state, and if the photon is in the other path we say that it is in the $|1\rangle$ state.
 
-We can implement the above encoding using the QCEngine. To do so, we will need to use the command \texttt{qc.start\_photon\_sim} to tell the engine that we are now going to be using linear optics.
+We can implement the above encoding using the QCEngine. To do so, we will need to use the commands \texttt{qc.start\_photon\_sim} and \texttt{qc.start\_photon\_sim} to tell the engine that we are now going to be using linear optics. When working on linear optics, our code will look like it has two qubits but is actually one qubit represented by two paths.
 
 \begin{lstlisting}
 qc.reset(2);
 qc.write(1);
 qc.start_photon_sim();
+qc.stop_photon_sim();
 \end{lstlisting}
 
-You can also now see that we have an option called ``Fock state''. The Fock state of a quantum system is related to linear optics, and describes how many photons are going down a specific path at a given point in time. In the case above, we have one photon in the first mode and none in the second, so our Fock state is $|1-\rangle$.
+You can also now see that we have an option called ``Fock state''. The Fock state of a quantum system is related to linear optics, and describes how many photons are going down a specific path at a given point in time. In the case above, we have one photon in the first path and none in the second, so our Fock state is $|1-\rangle$.
 
 So if this is how we encode a qubit, how do we measure which state it is in? This is done using single photon detectors. A single photon detector will release an electrical signal whenever a photon reaches it. By placing detectors on both the $|0\rangle$ and $|1\rangle$ path and waiting for one of them to register a photon, we can see which path the photon was in and thus measure the state.
 
-To detect which path a photon is in, we can use the $qc.read$ command:
+To detect which path a photon is in, we can use the \texttt{qc.read} command:
 
 \begin{lstlisting}
 qc.reset(2);
 qc.write(1);
 qc.start_photon_sim();
+qc.stop_photon_sim();
 qc.read();
 \end{lstlisting}
 
@@ -111,6 +113,7 @@ qc.reset(2);
 qc.write(1);
 qc.start_photon_sim();
 qc.dual_rail_beamsplitter(0.5, 1|2);
+qc.stop_photon_sim();
 qc.read();
 \end{lstlisting}
 
@@ -124,6 +127,7 @@ qc.write(1);
 qc.start_photon_sim();
 qc.dual_rail_beamsplitter(0.5, 1|2);
 qc.dual_rail_beamsplitter(0.5, 1|2);
+qc.stop_photon_sim();
 qc.read();
 \end{lstlisting}
 
@@ -132,7 +136,7 @@ It seems that we do not. If we start in the Fock state $|1-\rangle$ and apply a 
 The reason for this is because a beam splitter does not produce the same state as a Hadamard gate does. This is because when a photon is reflected off the beam splitter, a phase is introduced to that photon. So while the state we measure after sending a photon in path $|0\rangle$ through might be $|0\rangle$, the actual state would be $i|0\rangle$, where $i = \sqrt{-1}$.
 
 We can however make the photon come out its original path by placing a phase controller on one of the photon paths between the two beam splitters. In linear optics on integrated circuits, this can be done by just placing a heater next to the photon path:
-
+\\\\
 \begin{lstlisting}
 qc.reset(2);
 qc.write(1);
@@ -140,13 +144,14 @@ qc.start_photon_sim();
 qc.dual_rail_beamsplitter(0.5, 1|2);
 qc.phase(180, 1);
 qc.dual_rail_beamsplitter(0.5, 1|2);
+qc.stop_photon_sim();
 qc.read();
 \end{lstlisting}
 
 The above code will apply a phase of $180^\circ$ to any photons in the $|0\rangle$ path. This is enough to cause the single photons to interfere differently and result in the photon exiting the $|0\rangle$ path. It is worth noting however that this is still not strictly the same as the Hadamard gate.
 
 \begin{task}
-The first argument of the $qc.phase$ argument can be any number from $0$ to $360$. Try placing different numbers in and seeing how often you measure $|0\rangle$ or $|1\rangle$. Some numbers you try might produce a random state, so try running them multiple times. This experiment is an example of a Mach-Zender interferometer.
+The first argument of the $qc.phase$ argument can be any number from $0$ to $360$. Try placing different numbers in and seeing how often you measure $|0\rangle$ or $|1\rangle$. Some numbers you try might produce a superposition, so try running them multiple times. This experiment is an example of a Mach-Zender interferometer.
 \end{task}
 
 \section{Controlled-NOT}
@@ -155,7 +160,7 @@ So we can get a superposition with linear optics, but can we generate entangleme
 
 Unfortunately, implementing the $CNOT$ is where our current method for implementing a quantum computer using linear optics really starts to struggle. This comes back to the point made in Section \ref{sec:why}: Photons do not interact well with each other. So we need to be smarter in order to implement this gate.
 
-To start with, we will implemented a related gate, which we shall call $CZ$ for Controlled-$Z$\footnote{Recall that $Z|0\rangle = |0\rangle$ and $Z|1\rangle = -|1\rangle$.}. We will implement this gate using six photon paths: Two for the control qubit, two for the target qubit, and two as ancilla ports. The gate can be implemented using beam splitters with reflectivity $1/3$:
+To start with, we will implemented a related gate, which we shall call $CZ$ for Controlled-$Z$\footnote{Recall that $Z|0\rangle = |0\rangle$ and $Z|1\rangle = -|1\rangle$.}. We will implement this gate using six photon paths: Two for the control qubit, two for the target qubit, and two extra paths required for the gate. The gate can be implemented using beam splitters with reflectivity $1/3$:
 
 \begin{lstlisting}
 qc.reset(6);
@@ -179,7 +184,7 @@ Unfortunately, this gate will not always work. In fact, if you try running it ri
 The cases in which it does work satisfy the following properties:
 
 \begin{itemize}
-\item There are no qubits in the first and last photon modes,
+\item There are no qubits in the first and last photon paths,
 \item and there is exactly one photon in the control qubit paths
 \item and there is exactly one photon in the target qubit paths.
 \end{itemize}
@@ -217,7 +222,7 @@ These cases should all produce the original state.
 \end{task}
 
 Now we need to implement our $CNOT$. To do this, we shall reuse a trick from session 1. Remember in teleportation when we performed a Controlled-$Z$ operation consisting of a Hadamard, a $CNOT$ and another Hadamard? Well, we can similarly perform a $CNOT$ by performing a Hadamard, a Controlled-$Z$ and another Hadamard. Of course, we have not seen how to implement a Hadamard gate using linear optics. But we have seen a beam splitter, which is close to a Hadamard. So let's try using that instead:
-
+\\\\\\\\
 \begin{lstlisting}
 qc.reset(6);
 qc.write(4|8);

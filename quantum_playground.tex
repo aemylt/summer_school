@@ -74,35 +74,37 @@ To understand quantum computing, we will use QCEngine, a quantum computing simul
 
 A classical computer is made up of bits: $1$s and $0$s that represent data. Quantum computers store data in quantum bits, or {\em qubits}. We write qubits as $|1\rangle$ and $|0\rangle$. These symbols are called {\em kets}\footnote{This notation was invented by Paul Dirac, one of the best-known quantum physicists and born and raised in Bristol.}, and are used to describe quantum states.
 
-In QCEngine, we define qubits using the command \texttt{qc.reset}, which we write at the top of our code. This specifies the number of qubits we will be using. We then set these qubits to $|0\rangle$ using the command \texttt{qc.write(0)} Try running the code below by typing it into the text box, pressing ``Compile'' and then pressing ``Run'':
+In QCEngine, we define qubits using the command \texttt{qc.reset}, which we write at the top of our code. This specifies the number of qubits we will be using. We then set these qubits to $|0\rangle$ using the command \texttt{qc.write(0)} Try running the code below by typing it into the text box and pressing "Run this":
 
 \begin{lstlisting}
-qc.reset(1);
-qc.write(0);
+qc.reset(1); // generate 1 qubit
+qc.write(0); // set state to |0>
 \end{lstlisting}
 
-This line initialises $1$ qubit in the $|0\rangle$ state. We can see this in the box on the right, under the section ``State Vector''. This section shows a blue circle for the $|0\rangle$ state and a white circle for the $|1\rangle$ state, meaning that the state is $|0\rangle$. We can also write \texttt{qc.write(1)} to set the state to $|1\rangle$.
+This code initialises $1$ qubit in the $|0\rangle$ state. We can see this in the box on the right, under the section ``State Vector''. This section shows a blue circle for the $|0\rangle$ state and a white circle for the $|1\rangle$ state, meaning that the state is $|0\rangle$. We can also write \texttt{qc.write(1)} to set the state to $|1\rangle$.
+
+We also see another box above, which shows off what our quantum circuit looks like. Clicking on any part of the circuit will show us what the quantum state looks like at that point in the circuit. Finally, it is also worth mentioning that the white square in the corner of the state box will make the box larger or smaller, ``Ctrl + Scroll wheel'' will make the contents of the state box larger, and ``Shift + Scroll wheel'' will make the state vectors larger.
 
 \section{Measurement}
 
 While images like this showing off our complete quantum state are nice, we cannot look at quantum states this way in practice. Instead, we have to {\em measure} our qubits. We can do this using the \texttt{qc.read} command:
-
+\\
 \begin{lstlisting}
-qc.reset(1);
-qc.write(0);
-var result = qc.read();
-qc.print("Qubit 0 is |" + result + ">\n");
+qc.reset(1); // generate 1 qubit
+qc.write(0); // set state to |0>
+var result = qc.read(); // measure state
+qc.print("The state is |" + result + ">\n"); // print measured state
 \end{lstlisting}
 
 The third line measures qubit $0$ and puts the result in the \texttt{result} variable. The fourth line displays the result.
 
-From this we get the output ``Qubit $0$ is $|0\rangle$''. So, if we set our qubit to $|0\rangle$ and measure it, we find that the measured qubit is in the $|0\rangle$ state.
+From this we get the output ``The state is $|0\rangle$''. So, if we set our qubit to $|0\rangle$ and measure it, we find that the measured qubit is in the $|0\rangle$ state.
 
 \section{Quantum Gates}
 
 But data is only one half of computation. We also need be able to perform operations. Classical computers do this with logic gates, such as the $NOT$ gate, which flips a bit: $NOT(0) = 1$ and $NOT(1) = 0$.
 
-In quantum computing, we also have logic gates, which are called quantum gates. One example is the $X$ gate, which is the quantum equivalent of a classical $NOT$ gate: $X|0\rangle = |1\rangle$ and $X|1\rangle = |0\rangle$. Let's apply an $X$ gate to qubit $0$ in the playground:
+In quantum computing, we also have logic gates, which are called quantum gates. One example is the $X$ gate, which is the quantum equivalent of a classical $NOT$ gate: $X|0\rangle = |1\rangle$ and $X|1\rangle = |0\rangle$. Let's apply an $X$ gate to qubit $0$ in QCEngine:
 
 \begin{lstlisting}
 qc.reset(1);
@@ -110,14 +112,14 @@ qc.write(0);
 qc.not()
 \end{lstlisting}
 
-Now our circles have swapped; the blue circle is now above the $|0\rangle$ state and the white circle is now above the $|1\rangle$ state, just like we saw when we initialised our qubit to $|1\rangle$. So qubit $0$ has flipped from $|0\rangle$ to $|1\rangle$. We can also check by measuring:
+Now our circles have swapped; the blue circle is now above the $|1\rangle$ state and the white circle is now above the $|0\rangle$ state, just like we saw when we initialised our qubit to $|1\rangle$. So qubit $0$ has flipped from $|0\rangle$ to $|1\rangle$. We can also check by measuring:
 
 \begin{lstlisting}
 qc.reset(1);
 qc.write(0);
 qc.not()
 var result = qc.read();
-qc.print("Qubit 0 is |" + result + ">\n");
+qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
 
 Now when we measure our qubit, we find that the result is $|1\rangle$. We can also check the other direction by applying $X$ to a qubit in the $|1\rangle$ state and find that $X|1\rangle = |0\rangle$.
@@ -134,7 +136,7 @@ Another example of a single qubit gate is the Hadamard gate, $H$. Let's see what
 \begin{lstlisting}
 qc.reset(1);
 qc.write(0);
-qc.hadamard(1);
+qc.hadamard(1); // apply a Hadamard gate
 \end{lstlisting}
 
 Now our state vector has partially blue circles for both the $|0\rangle$ and $|1\rangle$ states. Let's measure this state a few times to see what happens:
@@ -144,7 +146,7 @@ qc.reset(1);
 qc.write(0);
 qc.hadamard(1);
 var result = qc.read();
-qc.print("Qubit 0 is |" + result + ">\n");
+qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
 
 Running this multiple times, we see that sometimes we get $|0\rangle$ and other times we get $|1\rangle$. This is called a superposition, where measuring the qubit could give $|0\rangle$ or $|1\rangle$. Until we measure the state, we do not know what the result will be.
@@ -164,16 +166,34 @@ qc.reset(1);
 qc.write(1);
 qc.hadamard(1);
 var result = qc.read();
-qc.print("Qubit 0 is |" + result + ">\n");
+qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
 
 It seems we get the same measurement results as before: sometimes we get $|0\rangle$ and sometimes we get $|1\rangle$. So does this mean the Hadamard gate produces the same result regardless of what we put into it?
 
 The answer is no; the states produced by the Hadamard gate are as different as the states $|0\rangle$ and $|1\rangle$. The state produced by applying the Hadamard gate to a $|0\rangle$ gate is $|+\rangle = 1/\sqrt{2}(|0\rangle + |1\rangle)$, while the state produced by applying the gate to $|1\rangle$ is $|-\rangle = 1/\sqrt{2}(|0\rangle - |1\rangle)$.
 
-The Bloch sphere is a way of visualising single qubits. If we click on the ``Bloch sphere'' link, we can see that the $|+\rangle$ and $|-\rangle$ are on opposite sides of the sphere, just like the $|0\rangle$ and $|1\rangle$ states.
+The Bloch sphere is one way of visualising single qubits, by displaying them as points on a sphere. If we click on the ``Bloch sphere'' link, we can see that the $|+\rangle$ and $|-\rangle$ are on opposite sides of the sphere, just like the $|0\rangle$ and $|1\rangle$ states. You can use the Scroll wheel on your mouse to rotate the Bloch sphere.
 
 But how likely are we to measure $|0\rangle$ or $|1\rangle$? If we measure the state $a|0\rangle + b|1\rangle$, the probability of measuring $|0\rangle$ is $|a|^2$, and the probability of measuring $|1\rangle$ is $|b|^2$. So if we measure the $|+\rangle$ or $|-\rangle$ state, we find the probability of measuring $|0\rangle$ or $|1\rangle$ both $|1/\sqrt{2}|^2 = 1/2$.
+
+You might wonder what would happen if we measured a state in superposition twice. Well, let's find out:
+
+\begin{lstlisting}
+qc.reset(1);
+qc.write(1);
+qc.hadamard(1);
+var result = qc.read();
+qc.print("The state is |" + result + ">\n");
+var result = qc.read();
+qc.print("The state is |" + result + ">\n");
+\end{lstlisting}
+
+It appears that while the first measurement is random, the second measurement is the same as the first. This is because after a measurement, the state is no longer in a superposition. Instead, it has collapsed into the state we measured. If we want our superposition, we need to set the whole experiment up again.
+
+\begin{task}
+Take a quantum state $a|0\rangle + b|1\rangle$. What do you think $|a|^2 + |b|^2$ equals?
+\end{task}
 
 \begin{task}
 What do you think will happen if we apply two Hadamard gates to the qubit $|0\rangle$? Try it in the QCEngine and see what actually happens. Was it what you expected? Try doing the same thing to the qubit $|1\rangle$ too.
@@ -181,20 +201,20 @@ What do you think will happen if we apply two Hadamard gates to the qubit $|0\ra
 
 \section{Multiple Qubits}
 
-Multiple qubits act similarly to multiple classical bits, where we can apply quantum gates to the individual qubits. We represent these qubits in the {\em tensor product} $\otimes$. For example, suppose the first qubit is $|0\rangle$ and the second is $|1\rangle$. We write this state as $|0\rangle \otimes |1\rangle$, and often shorten it to $|01\rangle$.
+Multiple qubits act similarly to multiple classical bits, where we can apply quantum gates to the individual qubits. For example, if the first qubit is $|0\rangle$ and the second is $|1\rangle$, we write this state as $|01\rangle$.
 
 So for example, we can apply an $X$ gate to the first and second qubits as follows:
 
 \begin{lstlisting}
-qc.reset(2);
-qc.write(0);
-qc.not(1);
-qc.not(2);
-var result = qc.read();
-qc.print("The state is |" + result + ">\n");
+qc.reset(2); // generate 2 qubits
+qc.write(0); // write the state |0> = |00>
+qc.not(1); // apply an X gate to qubit 1
+qc.not(2); // apply an X gate to qubit 2
+var result = qc.read(); // measure both qubits
+qc.print("The state is |" + result + ">\n"); // print measured state
 \end{lstlisting}
 
-And we find that they are in the $|11\rangle$ state, similarly to when we were acting only on individual qubits. Likewise, if we applied $X$ to only qubit $0$, then we would find that they were in the $|10\rangle$ state. So applying a quantum gate to one qubit doesn't affect the other.
+And the measured state turns out to be $|3\rangle$. It is worth noting that QCEngine writes this in decimal, which when converted to binary becomes $|11\rangle$. Thus multiple qubits act similarly to when we were acting only on individual qubits. Likewise, if we applied $X$ to only qubit $0$, then we would find that they were in the $|2\rangle$ state in decimal, or the $|10\rangle$ state in binary. So applying a quantum gate to one qubit doesn't affect the other.
 
 If we apply a Hadamard gate to one qubit, we create a superposition over that qubit while not producing a superposition over the other:
 
@@ -208,12 +228,12 @@ qc.print("The state is |" + result + ">\n");
 
 Like single qubits, we can produce any superposition over two qubits. Thus our state can be any form of $a|00\rangle + b|01\rangle + c|10\rangle + d|11\rangle$ where $|a|^2 + |b|^2 + |c|^2 + |d|^2 = 1$. Some example states include $|01\rangle$, $\frac{|00\rangle + |10\rangle}{\sqrt{2}}$ and $\frac{|00\rangle + |01\rangle + |10\rangle + |11\rangle}{2}$.
 
-It is worth noting that when applying a gate to the $i$-th qubit in QCEngine, you provide $2^{i-1}$ as an argument to that gate. This code below, for example, will apply an $X$ gate to the third qubit by calling \texttt{qc.not(4)}:
+It is worth noting that when applying a gate to the $i$-th qubit in QCEngine, you provide $2^{i-1}$ as an argument to that gate. This code below, for example, will apply an $X$ gate to the fourth qubit by calling \texttt{qc.not(8)}, thus resulting in the state $|8\rangle = |0001\rangle$:
 
 \begin{lstlisting}
-qc.reset(3);
-qc.write(0);
-qc.not(4);
+qc.reset(4); // generate 3 qubits
+qc.write(0); // write the state |0> = |0000>
+qc.not(8); // apply an X gate to qubit 4
 var result = qc.read();
 qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
@@ -225,19 +245,19 @@ One of the hardest things to do in classical computation is generate random $8$-
 \section{Entanglement}
 \label{sec:entanglement}
 
-Not all classical gates are single bit. The classical AND gate for example, takes two classical bits as input and produces one classical bit as output.
+Not all classical gates are single bit. The classical AND gate for example, takes two classical bits $x$ and $y$ as input and outputs one classical bit which is $1$ if $x = y = 1$ and $0$ otherwise.
 
-We also have multiple qubit quantum gates. One of particular importance is the Controlled-NOT gate, or $CNOT$, which takes a control qubit as the first argument and a target qubit as the second. In the quantum playground, the first argument of the $CNOT$ command is the control qubit, and the second argument is the target qubit. Let's see what happens when the control qubit is $|0\rangle$:
+We also have multiple qubit quantum gates. One of particular importance is the Controlled-NOT gate, or $CNOT$, which takes a control qubit as the first argument and a target qubit as the second. In QCEngine, the first argument of the $CNOT$ command is the target qubit, and the second argument is the control qubit. Let's see what happens when the control qubit is $|0\rangle$:
 
 \begin{lstlisting}
 qc.reset(2);
 qc.write(0);
-qc.cnot(2,1);
+qc.cnot(2,1); // apply a CNOT with control 1 and target 2
 var result = qc.read();
 qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
 
-It seems that $CNOT|00\rangle = |00\rangle$. Likewise, we can run again with our target qubit in the $|1\rangle$ state:
+It seems that $CNOT|00\rangle = |0\rangle = |00\rangle$. Likewise, we can run again with our target qubit in the $|1\rangle$ state:
 
 \begin{lstlisting}
 qc.reset(2);
@@ -248,7 +268,7 @@ var result = qc.read();
 qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
 
-Running this shows that $CNOT|01\rangle = |01\rangle$. So when the control qubit is $|0\rangle$, the $CNOT$ gate does nothing. So what if the control qubit is $|1\rangle$?
+Running this shows that $CNOT|01\rangle = |1\rangle = |01\rangle$. So when the control qubit is $|0\rangle$, the $CNOT$ gate does nothing. So what if the control qubit is $|1\rangle$?
 
 \begin{lstlisting}
 qc.reset(2);
@@ -259,7 +279,7 @@ var result = qc.read();
 qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
 
-Now our target qubit has been flipped, so we can see that $CNOT|10\rangle = |11\rangle$. Again, if our target qubit is $|1\rangle$:
+Now our target qubit has been flipped, so we can see that $CNOT|10\rangle = |3\rangle = |11\rangle$. Again, if our target qubit is $|1\rangle$:
 
 \begin{lstlisting}
 qc.reset(2);
@@ -271,7 +291,7 @@ var result = qc.read();
 qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
 
-Measuring this shows that $CNOT|11\rangle = |10\rangle$. So if our control qubit is $|0\rangle$, then our $CNOT$ gate does nothing, but if our control qubit is $|1\rangle$, then $CNOT$ applies an $X$ gate to the target qubit.
+Measuring this shows that $CNOT|11\rangle = |2\rangle = |10\rangle$. So if our control qubit is $|0\rangle$, then our $CNOT$ gate does nothing, but if our control qubit is $|1\rangle$, then $CNOT$ applies an $X$ gate to the target qubit.
 
 But these aren't the only possible states our control qubit can take. What if our control qubit is in a superposition?
 
@@ -288,55 +308,63 @@ This produces a very different result. It now appears that our measurement of qu
 
 This effect is called {\em entanglement}, and is one of the strangest results of quantum mechanics. Entangled states collapse at exactly the same time, regardless of distance between the two qubits. One qubit could be in the University of Bristol HH Wills Physics Laboratory and the other could be at the University of Bristol Moon Base\footnote{Construction pending.}, and their collapse would still be at the same time. Classically, this simultaneous collapse should be impossible, as it would require one qubit to send a message describing its measurement result to the other faster than the speed of light, breaking the laws of relativity. This led Albert Einstein to describe quantum mechanics as ``Spooky action at a distance.''
 
-While we haven't been able to entangle qubits between the At-Bristol Science Centre and the Digimakers Moon Base, physicists at a number of institutions -- most famously Delft University of Technology -- have managed to successfully entangle qubits and witness these effects before light could have travelled from one qubit to the other. So there must be something more to quantum.
+While we haven't been able to perform the above experiment, physicists at a number of institutions -- most famously Delft University of Technology -- have managed to entangle qubits and witness these effects before light could have travelled from one qubit to the other. So there must be something more to quantum.
 
 \section{Teleportation}
 
 Now let's talk about something really exciting that we can do with quantum computers: Teleportation!
 
-Teleporting a human is still very hard, even if quantum computing is easy. But we can still send a qubit from one person to another using only an entangled pair of qubits and two classical bits.
+Teleporting a human is still very hard, even if quantum computing is easy. But we can still send a qubit from one person (called Alice) to another (called Bob) using only an entangled pair of qubits and two classical bits.
 
 But first we need to create the quantum state that we want to teleport. We'll do this by starting with a qubit in the $|0\rangle$ state and applying rotations of various degrees in the Bloch sphere view:
 
 \begin{lstlisting}
 qc.reset(3);
+qc.write(0);
 
-qc.codeLabel('prep');
-qc.write(0, 1);
-qc.rotx(25, 1);
-qc.roty(25, 1);
-qc.phase(25, 1);
+qc.codeLabel('prep'); // add a label to the circuit
+qc.rotx(25, 1); // rotate the state in x direction
+qc.roty(25, 1); // rotate the state in y direction
+qc.phase(25, 1); // rotate the state in z direction
 \end{lstlisting}
 
-Now that our qubit is prepared, we need to generate our entangled pair of qubits, one of which will be kept by our sender and the other by our receiver:
+Now that our qubit is prepared, we need to generate our entangled pair of qubits, one which belongs to Alice and the other to Bob:
 
 \begin{lstlisting}
 qc.codeLabel('entangle');
-qc.write(0, 2|4);
+// entangle Alice's qubit with Bob's, like in Section 5
 qc.hadamard(2);
 qc.cnot(4, 2);
 \end{lstlisting}
 
-Next, we send the qubit. This is done by the sender applying the entanglement operation in reverse to their qubits and then performing a measurement:
+Next, Alice performs the entanglement operation on her two qubits in revers, takes a measurement of her two qubits and sends the result to Bob as two classical bits:
 
 \begin{lstlisting}
 qc.codeLabel('send');
-qc.cnot(2, 1);
+qc.cnot(2, 1); // reverse entanglement of Alice's qubits
 qc.hadamard(1);
-qc.read(1|2);
+qc.read(1|2); // measurement of Alice's qubits
 \end{lstlisting}
 
-If we look at the Bloch sphere now, our third qubit might be the same as the original, but it probably is not. To be precise, the state will have been correctly teleported if our measured result is $|00\rangle$. So what do we do if that was not our measured result? Well, the receiver applies correction operations to their qubit, based on what state the sender measured\footnote{The sender sending their measurement result to the receiver is the two classical bits sent in this protocol.}:
+If we look at the Bloch sphere now, our third qubit might be the same as the original, but it probably is not. To be precise, the state will have been correctly teleported if our measured result is $|00\rangle$. So what do we do if that was not our measured result? Well, Bob applies correction operations to his qubit, based on what Alice's measurement result is:
+
+\begin{itemize}
+\item If Alice's result was $|00\rangle$, he does nothing
+\item If Alice's result was $|01\rangle$, he performs a $Z$ operation, where $Z|0\rangle = |0\rangle$ and $Z|1\rangle = -|1\rangle$
+\item If Alice's result was $|10\rangle$, he performs an $X$ operation
+\item If Alice's result was $|11\rangle$, he performs a $Z$ operation followed by an $X$ operation
+\end{itemize}
 
 \begin{lstlisting}
 qc.codeLabel('receive');
-qc.cnot(4, 2);
+qc.cnot(4, 2); // apply corrective X gate
+// next three lines apply corrective Z gate
 qc.hadamard(4);
 qc.cnot(4, 1);
 qc.hadamard(4);
 \end{lstlisting}
 
-The second line in the above code applies an $X$ gate to the receiver's qubit, conditioned on the sender's second qubit. The following three lines can be thought of as applying a gate called $Z$ which acts as $Z|0\rangle = |0\rangle$ and $Z|1\rangle = -|1\rangle$, conditioned on the sender's first qubit.
+The second line in the above code applies an $X$ gate to the receiver's qubit, conditioned on the sender's second qubit. The following three lines can be thought of as applying a $Z$ gate, as it can be shown that a Hadamard gate, followed by an $X$ gate, followed by another Hadamard gate, is equivalent to applying a $Z$ gate.
 
 Now if we look at the Bloch sphere image of the third qubit, it matches the first qubit during the state preparation stage. Thus we have successfully managed to teleport a single qubit.
 
@@ -349,7 +377,7 @@ Try removing one of the corrections in the receive code, either line $2$ or line
 \end{task}
 
 \begin{task}
-(Harder) How might you teleport two qubits? Try writing a protocol in the QCEngine for it. Does the protocol also work if the qubits are entangled?
+(Harder) How might you teleport two qubits? Try writing a protocol in the QCEngine for it. Does the protocol still work if the qubits Alice wants to send are entangled?
 \end{task}
 
 \end{document}
