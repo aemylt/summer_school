@@ -175,6 +175,10 @@ The Bloch sphere is a way of visualising single qubits. If we click on the ``Blo
 
 But how likely are we to measure $|0\rangle$ or $|1\rangle$? If we measure the state $a|0\rangle + b|1\rangle$, the probability of measuring $|0\rangle$ is $|a|^2$, and the probability of measuring $|1\rangle$ is $|b|^2$. So if we measure the $|+\rangle$ or $|-\rangle$ state, we find the probability of measuring $|0\rangle$ or $|1\rangle$ both $|1/\sqrt{2}|^2 = 1/2$.
 
+\begin{task}
+What do you think will happen if we apply two Hadamard gates to the qubit $|0\rangle$? Try it in the QCEngine and see what actually happens. Was it what you expected? Try doing the same thing to the qubit $|1\rangle$ too.
+\end{task}
+
 \section{Multiple Qubits}
 
 Multiple qubits act similarly to multiple classical bits, where we can apply quantum gates to the individual qubits. We represent these qubits in the {\em tensor product} $\otimes$. For example, suppose the first qubit is $|0\rangle$ and the second is $|1\rangle$. We write this state as $|0\rangle \otimes |1\rangle$, and often shorten it to $|01\rangle$.
@@ -203,6 +207,16 @@ qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
 
 Like single qubits, we can produce any superposition over two qubits. Thus our state can be any form of $a|00\rangle + b|01\rangle + c|10\rangle + d|11\rangle$ where $|a|^2 + |b|^2 + |c|^2 + |d|^2 = 1$. Some example states include $|01\rangle$, $\frac{|00\rangle + |10\rangle}{\sqrt{2}}$ and $\frac{|00\rangle + |01\rangle + |10\rangle + |11\rangle}{2}$.
+
+It is worth noting that when applying a gate to the $i$-th qubit in QCEngine, you provide $2^{i-1}$ as an argument to that gate. This code below, for example, will apply an $X$ gate to the third qubit by calling \texttt{qc.not(4)}:
+
+\begin{lstlisting}
+qc.reset(3);
+qc.write(0);
+qc.not(4);
+var result = qc.read();
+qc.print("The state is |" + result + ">\n");
+\end{lstlisting}
 
 \begin{task}
 One of the hardest things to do in classical computation is generate random $8$-bit numbers such that every number is as likely to be generated as every other number. How might you use a quantum computer to generate $8$-bit numbers purely at random? Try programming this in QCEngine.
