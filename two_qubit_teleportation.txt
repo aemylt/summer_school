@@ -1,0 +1,33 @@
+qc.reset(6);
+qc.write(0);
+
+qc.codeLabel('state prep');
+qc.rotx(25, 1);
+qc.roty(25, 1);
+qc.phase(25, 1);
+qc.rotx(50, 2);
+qc.roty(50, 2);
+qc.phase(50, 2);
+
+qc.codeLabel('entangle');
+qc.hadamard(4);
+qc.cnot(16, 4);
+qc.hadamard(8);
+qc.cnot(32, 8);
+
+qc.codeLabel('send');
+qc.cnot(4, 1);
+qc.hadamard(1);
+qc.cnot(8, 2);
+qc.hadamard(2);
+qc.read(1|2|4|8);
+
+qc.codeLabel('receive');
+qc.cnot(16, 4);
+qc.hadamard(16);
+qc.cnot(16, 1);
+qc.hadamard(16);
+qc.cnot(32, 8);
+qc.hadamard(32);
+qc.cnot(32, 2);
+qc.hadamard(32);
