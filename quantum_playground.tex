@@ -171,25 +171,11 @@ qc.print("The state is |" + result + ">\n");
 
 It seems we get the same measurement results as before: sometimes we get $|0\rangle$ and sometimes we get $|1\rangle$. So does this mean the Hadamard gate produces the same result regardless of what we put into it?
 
-The answer is no; the states produced by the Hadamard gate are as different as the states $|0\rangle$ and $|1\rangle$. The state produced by applying the Hadamard gate to a $|0\rangle$ gate is $|+\rangle = 1/\sqrt{2}(|0\rangle + |1\rangle)$, while the state produced by applying the gate to $|1\rangle$ is $|-\rangle = 1/\sqrt{2}(|0\rangle - |1\rangle)$.
+The answer is no; the states produced by the Hadamard gate are as different as the states $|0\rangle$ and $|1\rangle$. The state produced by applying the Hadamard gate to a $|0\rangle$ gate is $|+\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}}$, while the state produced by applying the gate to $|1\rangle$ is $|-\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}}$.
 
 The Bloch sphere is one way of visualising single qubits, by displaying them as points on a sphere. If we click on the ``Bloch sphere'' link, we can see that the $|+\rangle$ and $|-\rangle$ are on opposite sides of the sphere, just like the $|0\rangle$ and $|1\rangle$ states. You can use the Scroll wheel on your mouse to rotate the Bloch sphere.
 
-But how likely are we to measure $|0\rangle$ or $|1\rangle$? If we measure the state $a|0\rangle + b|1\rangle$, the probability of measuring $|0\rangle$ is $|a|^2$, and the probability of measuring $|1\rangle$ is $|b|^2$. So if we measure the $|+\rangle$ or $|-\rangle$ state, we find the probability of measuring $|0\rangle$ or $|1\rangle$ both $|1/\sqrt{2}|^2 = 1/2$.
-
-You might wonder what would happen if we measured a state in superposition twice. Well, let's find out:
-
-\begin{lstlisting}
-qc.reset(1);
-qc.write(1);
-qc.hadamard(1);
-var result = qc.read();
-qc.print("The state is |" + result + ">\n");
-var result = qc.read();
-qc.print("The state is |" + result + ">\n");
-\end{lstlisting}
-
-It appears that while the first measurement is random, the second measurement is the same as the first. This is because after a measurement, the state is no longer in a superposition. Instead, it has collapsed into the state we measured. If we want our superposition, we need to set the whole experiment up again.
+But how likely are we to measure $|0\rangle$ or $|1\rangle$? If we measure the state $a|0\rangle + b|1\rangle$, the probability of measuring $|0\rangle$ is $|a|^2$, and the probability of measuring $|1\rangle$ is $|b|^2$. So if we measure the $|+\rangle$ or $|-\rangle$ state, we find the probability of measuring $|0\rangle$ or $|1\rangle$ both $\left|\frac{1}{\sqrt{2}}\right|^2 = 1/2$.
 
 \begin{task}
 Take a quantum state $a|0\rangle + b|1\rangle$. What do you think $|a|^2 + |b|^2$ equals?
@@ -197,6 +183,10 @@ Take a quantum state $a|0\rangle + b|1\rangle$. What do you think $|a|^2 + |b|^2
 
 \begin{task}
 What do you think will happen if we apply two Hadamard gates to the qubit $|0\rangle$? Try it in the QCEngine and see what actually happens. Was it what you expected? Try doing the same thing to the qubit $|1\rangle$ too.
+\end{task}
+
+\begin{task}
+What do you think will happen if we measure a qubit in superposition twice? Try it in QCEngine and see if you were right.
 \end{task}
 
 \section{Multiple Qubits}
@@ -294,7 +284,7 @@ qc.print("The state is |" + result + ">\n");
 Measuring this shows that $CNOT|11\rangle = |2\rangle = |10\rangle$. So if our control qubit is $|0\rangle$, then our $CNOT$ gate does nothing, but if our control qubit is $|1\rangle$, then $CNOT$ applies an $X$ gate to the target qubit.
 
 But these aren't the only possible states our control qubit can take. What if our control qubit is in a superposition?
-
+\\\\\\\\
 \begin{lstlisting}
 qc.reset(2);
 qc.write(0);
