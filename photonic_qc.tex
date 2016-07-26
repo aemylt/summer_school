@@ -84,7 +84,7 @@ qc.start_photon_sim();
 qc.stop_photon_sim();
 \end{lstlisting}
 
-You can also now see that we have an option called ``Fock state''. The Fock state of a quantum system is related to linear optics, and describes how many photons are going down a specific path at a given point in time. In the case above, we have one photon in the first path and none in the second, so our Fock state is $|1-\rangle$.
+If we click on the photon simulation part of the circuit, which is highlighted in green, we now have an option called ``Fock states''. The Fock state of a quantum system is related to linear optics, and describes how many photons are going down a specific path at a given point in time. In the case above, we have one photon in the first path and none in the second, so our Fock state is $|1-\rangle$.
 
 So if this is how we encode a qubit, how do we measure which state it is in? This is done using single photon detectors. A single photon detector will release an electrical signal whenever a photon reaches it. By placing detectors on both the $|0\rangle$ and $|1\rangle$ path and waiting for one of them to register a photon, we can see which path the photon was in and thus measure the state.
 
@@ -151,7 +151,11 @@ qc.read();
 The above code will apply a phase of $180^\circ$ to any photons in the $|0\rangle$ path. This is enough to cause the single photons to interfere differently and result in the photon exiting the $|0\rangle$ path. It is worth noting however that this is still not strictly the same as the Hadamard gate.
 
 \begin{task}
-The first argument of the $qc.phase$ argument can be any number from $0$ to $360$. Try placing different numbers in and seeing how often you measure $|0\rangle$ or $|1\rangle$. Some numbers you try might produce a superposition, so try running them multiple times. This experiment is an example of a Mach-Zender interferometer.
+The first argument of the $qc.phase$ argument can be any number from $0$ to $360$. Try placing different numbers in and seeing how often you measure $|0\rangle$ or $|1\rangle$. Some numbers you try might produce a superposition, so try running them multiple times. This experiment is an example of a Mach-Zender interferometer, which demonstrates how a photon can interfere with itself.
+\end{task}
+
+\begin{task}
+What do you think will happen if we have a photon in both input paths of the beam splitter? Try writing code for this and run it a few times to see what happens. Look at the Fock state after the beam splitter to get a better idea of what is happening to the quantum state. This experiment is a Hong-Ou-Mandel dip, which demonstrates how photons can interfere with each other.
 \end{task}
 
 \section{Controlled-NOT}
@@ -161,7 +165,7 @@ So we can get a superposition with linear optics, but can we generate entangleme
 Unfortunately, implementing the $CNOT$ is where our current method for implementing a quantum computer using linear optics really starts to struggle. This comes back to the point made in Section \ref{sec:why}: Photons do not interact well with each other. So we need to be smarter in order to implement this gate.
 
 To start with, we will implemented a related gate, which we shall call $CZ$ for Controlled-$Z$\footnote{Recall that $Z|0\rangle = |0\rangle$ and $Z|1\rangle = -|1\rangle$.}. We will implement this gate using six photon paths: Two for the control qubit, two for the target qubit, and two extra paths required for the gate. The gate can be implemented using beam splitters with reflectivity $1/3$:
-
+\\\\\\\\\\
 \begin{lstlisting}
 qc.reset(6);
 qc.write(4|8);
@@ -222,7 +226,7 @@ These cases should all produce the original state.
 \end{task}
 
 Now we need to implement our $CNOT$. To do this, we shall reuse a trick from session 1. Remember in teleportation when we performed a Controlled-$Z$ operation consisting of a Hadamard, a $CNOT$ and another Hadamard? Well, we can similarly perform a $CNOT$ by performing a Hadamard, a Controlled-$Z$ and another Hadamard. Of course, we have not seen how to implement a Hadamard gate using linear optics. But we have seen a beam splitter, which is close to a Hadamard. So let's try using that instead:
-\\\\\\\\
+
 \begin{lstlisting}
 qc.reset(6);
 qc.write(4|8);
@@ -250,7 +254,7 @@ Verify the above claim by running the circuit on the different input states. To 
 \end{task}
 
 \begin{task}
-How could you use this gate to generate entangled qubits?
+How could you use this gate to generate entangled qubits? Try writing code which does this in QCEngine.
 \end{task}
 
 \end{document}
