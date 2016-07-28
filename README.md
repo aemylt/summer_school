@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the GitHub repositry for day four of [Quantum in the Summer](http://www.bristol.ac.uk/physics/research/quantum/engagement/qsummer/)! Within here are a bunch of resources written by [Dom Moylett](http://research-information.bristol.ac.uk/en/persons/dom-j-moylett(4dda1234-ac14-43cf-9192-b1332f7ead2e).html) and [Sam Pallister](http://research-information.bristol.ac.uk/en/persons/sam-pallister(c76f8f71-77c2-4e76-a67c-4ce14c935a8c).html) on the subject of quantum computing.
+Welcome to the GitHub repositry for day four of [Quantum in the Summer](http://www.bristol.ac.uk/physics/research/quantum/engagement/qsummer/)! Within here are a bunch of resources written by [Dom Moylett](http://research-information.bristol.ac.uk/en/persons/dom-j-moylett(4dda1234-ac14-43cf-9192-b1332f7ead2e).html), [Sam Pallister](http://research-information.bristol.ac.uk/en/persons/sam-pallister(c76f8f71-77c2-4e76-a67c-4ce14c935a8c).html), [Euan Allen](http://research-information.bristol.ac.uk/en/persons/euan-j-allen(774e8022-393a-42d2-88ef-28f5d8c8ad79).html) and [Eric Johnston](http://www.bristol.ac.uk/physics/people/eric-r-johnston/) on the subject of quantum computing.
 
 These worksheets were written for students aged 16 or over who had spent the previous three days learning about quantum physics -- in particular linear optics -- and had learned about the concepts of bizarre effects such as superposition and entanglement.These bizarre properties make quantum physics very hard to simulate, to the extent that we build massive supercomputers -- such as the University of Bristol's own [Blue Crystal](https://www.acrc.bris.ac.uk/) -- for the purpose of simulating physical effects. This irritated a lot of physicists in the 1980s. After all, quantum mechanics describes a collection of physical effects, and a computer is a purely physical device. If simulating these effects on a computer is so hard, why don't we build computers which take advantage of these same effects?
 
@@ -14,7 +14,7 @@ But we are jumping the gun here. It's nice seeing the developments of quantum co
 
 In quantum computing, we have analogues to these fundamental concepts: We store data in quantum bits, or qubits, and operate on that data using quantum gates. However, there are significant differences between these classical ideas and their quantum versions. For example, quantum bits can, like their classical counterpart, be |0> or |1>. but they can also be in a superposition of these two states, where looking at the qubit might say that it is |0>, or that it is |1>, with some probability.
 
-To learn about these concepts in an active manner, we have given examples and tasks for you to complete using [QCEngine](http://machinelevel.com/qc/), a simulation of a quantum computer that runs in your own web browser developed by [Eric Johnston](http://www.bristol.ac.uk/physics/people/eric-r-johnston/) of the University of Bristol.
+To learn about these concepts in an active manner, we have given examples and tasks for you to complete using [QCEngine](http://machinelevel.com/qc/), a simulation of a quantum computer developed by Eric that runs in your own web browser.
 
 The worksheets themselves are divided up into four parts:
 
