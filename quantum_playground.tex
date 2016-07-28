@@ -221,7 +221,7 @@ Like single qubits, we can produce any superposition over two qubits. Thus our s
 It is worth noting that when applying a gate to the $i$-th qubit in QCEngine, you provide $2^{i-1}$ as an argument to that gate. This code below, for example, will apply an $X$ gate to the fourth qubit by calling \texttt{qc.not(8)}, thus resulting in the state $|8\rangle = |0001\rangle$:
 
 \begin{lstlisting}
-qc.reset(4); // generate 3 qubits
+qc.reset(4); // generate 4 qubits
 qc.write(0); // write the state |0> = |0000>
 qc.not(8); // apply an X gate to qubit 4
 var result = qc.read();
@@ -252,24 +252,24 @@ It seems that $CNOT|00\rangle = |0\rangle = |00\rangle$. Likewise, we can run ag
 \begin{lstlisting}
 qc.reset(2);
 qc.write(0);
-qc.not(2);
-qc.cnot(2,1);
-var result = qc.read();
-qc.print("The state is |" + result + ">\n");
-\end{lstlisting}
-
-Running this shows that $CNOT|01\rangle = |1\rangle = |01\rangle$. So when the control qubit is $|0\rangle$, the $CNOT$ gate does nothing. So what if the control qubit is $|1\rangle$?
-
-\begin{lstlisting}
-qc.reset(2);
-qc.write(0);
 qc.not(1);
 qc.cnot(2,1);
 var result = qc.read();
 qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
 
-Now our target qubit has been flipped, so we can see that $CNOT|10\rangle = |3\rangle = |11\rangle$. Again, if our target qubit is $|1\rangle$:
+Running this shows that $CNOT|10\rangle = |2\rangle = |10\rangle$. So when the control qubit is $|0\rangle$, the $CNOT$ gate does nothing. So what if the control qubit is $|1\rangle$?
+
+\begin{lstlisting}
+qc.reset(2);
+qc.write(0);
+qc.not(2);
+qc.cnot(2,1);
+var result = qc.read();
+qc.print("The state is |" + result + ">\n");
+\end{lstlisting}
+
+Now our target qubit has been flipped, so we can see that $CNOT|01\rangle = |3\rangle = |11\rangle$. Again, if our target qubit is $|1\rangle$:
 
 \begin{lstlisting}
 qc.reset(2);
@@ -281,7 +281,7 @@ var result = qc.read();
 qc.print("The state is |" + result + ">\n");
 \end{lstlisting}
 
-Measuring this shows that $CNOT|11\rangle = |2\rangle = |10\rangle$. So if our control qubit is $|0\rangle$, then our $CNOT$ gate does nothing, but if our control qubit is $|1\rangle$, then $CNOT$ applies an $X$ gate to the target qubit.
+Measuring this shows that $CNOT|11\rangle = |1\rangle = |01\rangle$. So if our control qubit is $|0\rangle$, then our $CNOT$ gate does nothing, but if our control qubit is $|1\rangle$, then $CNOT$ applies an $X$ gate to the target qubit.
 
 But these aren't the only possible states our control qubit can take. What if our control qubit is in a superposition?
 \\\\\\\\
